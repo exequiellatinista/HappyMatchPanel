@@ -18,6 +18,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '@/assets/css/main.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -45,6 +46,8 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    // https://www.npmjs.com/package/@nuxtjs/svg
+    "@nuxtjs/svg",
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -74,6 +77,17 @@ export default {
         }
       }
     }
+  },
+
+  colorMode: {
+    preference: 'system', // default value of $colorMode.preference
+    fallback: 'light', // fallback value if not system preference found
+    hid: 'nuxt-color-mode-script',
+    globalName: '__NUXT_COLOR_MODE__',
+    componentName: 'ColorScheme',
+    classPrefix: '',
+    classSuffix: '-mode',
+    storageKey: 'nuxt-color-mode'
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
