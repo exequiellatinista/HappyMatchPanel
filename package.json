@@ -26,7 +26,7 @@
     "vuetify": "^2.5.5"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.14.7",
+    "@babel/eslint-parser": "^7.14.9",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^13.1.0",
     "@nuxtjs/color-mode": "^2.0.10",
