@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="containerColorSwitch">
         {{$colorMode.preference}}
         <IconDark 
             v-if="$colorMode.preference === 'dark'" 
@@ -11,15 +11,15 @@
             class="icons"
             @click="changeTheme('dark')"
         />
-          <div>
-    <h1>Color mode: {{ $colorMode.value }}</h1>
-    <select v-model="$colorMode.preference">
-      <option value="system">System</option>
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
-      <option value="sepia">Sepia</option>
-    </select>
-  </div>
+        <div>
+            <h1>Color mode: {{ $colorMode.value }}</h1>
+            <select v-model="$colorMode.preference">
+                <option value="system">System</option>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+                <option value="sepia">Sepia</option>
+            </select>
+        </div>
     </div>
     
 </template>
@@ -37,7 +37,7 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style>
 body {
   background-color: #fff;
   color: rgba(0,0,0,0.8);
@@ -50,8 +50,20 @@ body {
   background-color: #f1e7d0;
   color: #433422;
 }
+.dark-mode select {
+      color: #ebf4f1;
+}
 .icons {
     cursor: pointer;
+}
+.dark-mode .icons {
+    fill: white;
+}
+.containerColorSwitch {
+    display:flex;
+    width:1rem;
+    height: 1rem;
+    box-sizing: border-box;
 }
 
 </style>

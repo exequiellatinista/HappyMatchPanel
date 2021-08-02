@@ -1,19 +1,25 @@
-<template>
-
+<template>  
+  <div>
+    <BaseHeader />
     <v-main>
-      <v-container>
+      <v-container class="containerDefault">
         <Nuxt />
       </v-container>
     </v-main>
-  
+  </div>
 </template>
 
 <script>
+import BaseHeader from '@/components/ui/BaseHeader.vue'
 export default {
-  data () {
-    return {
-
-    }
+  components: {
+    BaseHeader,
   }
 }
 </script>
+
+<style>
+  .containerDefault {
+    margin-top:5rem;
+  }
+</style>
