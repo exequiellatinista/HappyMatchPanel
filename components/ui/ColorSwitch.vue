@@ -1,46 +1,40 @@
 <template>
-    <div class="containerColorSwitch">
-        {{$colorMode.preference}}
-        <IconDark 
-            v-if="$colorMode.preference === 'dark'" 
-            class="icons"
-            @click="changeTheme('light')"
-        />
-        <IconLight 
-            v-else 
-            class="icons"
-            @click="changeTheme('dark')"
-        />
-        <div>
-            <h1>Color mode: {{ $colorMode.value }}</h1>
-            <select v-model="$colorMode.preference">
-                <option value="system">System</option>
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-                <option value="sepia">Sepia</option>
-            </select>
-        </div>
+  <div class="containerColorSwitch">
+    <IconDark
+      v-if="$colorMode.preference === 'dark'"
+      class="icons"
+      @click="changeTheme('light')"
+    />
+    <IconLight v-else class="icons" @click="changeTheme('dark')" />
+    <div class="comboBoxColorMode">
+      <h1>Color mode: {{ $colorMode.value }}</h1>
+      <select v-model="$colorMode.preference">
+        <option value="system">System</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="sepia">Sepia</option>
+      </select>
     </div>
-    
+  </div>
 </template>
 <script>
 export default {
-    name: 'ColorSwitch',
-    components: {
-        IconDark: () => import('@/assets/icons/dark.svg?inline'),
-        IconLight: () => import('@/assets/icons/light.svg?inline')
+  name: 'ColorSwitch',
+  components: {
+    IconDark: () => import('@/assets/icons/dark.svg?inline'),
+    IconLight: () => import('@/assets/icons/light.svg?inline'),
+  },
+  methods: {
+    changeTheme(theme) {
+      this.$colorMode.preference = theme
     },
-    methods: {
-        changeTheme(theme) {
-            this.$colorMode.preference = theme
-        }
-    }
+  },
 }
 </script>
 <style>
 body {
   background-color: #fff;
-  color: rgba(0,0,0,0.8);
+  color: rgba(0, 0, 0, 0.8);
 }
 .dark-mode body {
   background-color: #091a28;
@@ -51,19 +45,28 @@ body {
   color: #433422;
 }
 .dark-mode select {
-      color: #ebf4f1;
+  color: #ebf4f1;
 }
 .icons {
-    cursor: pointer;
+  cursor: pointer;
+  width: 1rem;
+  height: 1rem;
 }
 .dark-mode .icons {
-    fill: white;
+  fill: white;
 }
 .containerColorSwitch {
-    display:flex;
-    width:1rem;
-    height: 1rem;
-    box-sizing: border-box;
+  height: 1.5rem;
+  width: 3.5rem;
+  box-sizing: border-box;
+  display: grid;
+  place-content: center;
+  justify-content: center;
+  border: solid 1px;
+  border-radius: 10px;
 }
-
+.comboBoxColorMode {
+  display: none;
+  font-size: 8px;
+}
 </style>
