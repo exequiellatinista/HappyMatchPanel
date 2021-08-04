@@ -1,7 +1,9 @@
 <template>
   <footer>
     <div class="containerFooter">
-      
+      <nuxt-link v-for="(link, index) in links" :key="index">
+
+      </nuxt-link>
     </div>
   </footer>
 </template>
