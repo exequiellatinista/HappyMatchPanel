@@ -1,8 +1,8 @@
 <template>
   <footer>
     <div class="containerFooter">
-      <nuxt-link v-for="(link, index) in links" :key="index">
-
+      <nuxt-link v-for="(link, index) in links" :key="index" :to="link.url">
+        <img :src="getIcon(link.icon)" :alt="link.name" class="icons"/>
       </nuxt-link>
     </div>
   </footer>
@@ -31,6 +31,11 @@ export default {
       },
     ],
   }),
+  methods: {
+    getIcon(icon){
+      return require(`@/assets/icons/${icon}.svg`)
+    }
+  }
 }
 </script>
 <style scoped>
