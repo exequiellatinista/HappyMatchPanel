@@ -2,7 +2,7 @@
   <footer>
     <div class="containerFooter">
       <nuxt-link v-for="(link, index) in links" :key="index" :to="link.url">
-        <img :src="getIcon(link.icon)" :alt="link.name" class="icons"/>
+        <component :is="link.component" :alt="link.name" class="icons"/>
       </nuxt-link>
     </div>
   </footer>
@@ -11,30 +11,30 @@
 export default {
   name: 'BaseFooter',
   components: {
+    IconHome: () => import('@/assets/icons/home.svg?inline'),
+    IconConversation: () => import('@/assets/icons/conversation.svg?inline'),
+    IconCustomer: () => import('@/assets/icons/customer.svg?inline'),
   },
   data: () => ({
     links: [
       {
         icon: 'home',
-        name: 'Inicio',
         url: '/',
+        component: 'IconHome'
       },
       {
         icon: 'conversation',
-        name: 'Preguntas',
         url: '/questions',
+        component: 'IconConversation'
       },
       {
         icon: 'customer',
-        name: 'Clientes',
         url: '/clients',
+        component: 'IconCustomer'
       },
     ],
   }),
   methods: {
-    getIcon(icon){
-      return require(`@/assets/icons/${icon}.svg`)
-    }
   }
 }
 </script>
