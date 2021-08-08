@@ -1,5 +1,6 @@
 <template>
   <div class="containerLogin">
+    <ColorSwitch />
     <div class="loginBox">
       <h1>HappyMatch</h1>
       <p>Inicie sesión con su usuario y contraseña </p>
@@ -13,9 +14,13 @@
   </div>
 </template>
 <script>
+import ColorSwitch from '@/components/ui/ColorSwitch.vue'
 export default {
   name: 'Login',
-  layout: 'auth'
+  components: {
+    ColorSwitch,
+    },
+  layout: 'auth',
 }
 </script>
 <style scoped>
@@ -28,7 +33,7 @@ export default {
   }
 
   .loginBox {
-    position: relative;
+    position: relativeg;
     display:flex;
     align-items: center;
     flex-direction: column;
