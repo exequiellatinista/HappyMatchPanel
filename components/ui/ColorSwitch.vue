@@ -62,8 +62,8 @@ body {
   display: grid;
   place-content: center;
   justify-content: center;
-  border: solid 1px;
-  border-radius: 10px;
+  border: var(--border-color) solid 1px;
+  border-radius: 0.35rem;
 }
 .comboBoxColorMode {
   display: none;
