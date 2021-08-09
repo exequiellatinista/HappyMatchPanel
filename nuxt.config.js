@@ -71,7 +71,7 @@ export default {
 
   firebase: {
     config: {
-      apiKey: process.env.VUE_APP_FIREBASE_KEY,
+      apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
       authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
       projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
       storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
@@ -87,7 +87,7 @@ export default {
   },
 
   env: {
-    VUE_APP_FIREBASE_KEY: process.env.VUE_APP_FIREBASE_KEY
+    VUE_APP_FIREBASE_API_KEY: process.env.VUE_APP_FIREBASE_API_KEY
   },
 
   auth: {
