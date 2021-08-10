@@ -21,7 +21,6 @@ export default {
 <style scoped>
 header {
   display: grid;
-  height: 3rem;
   width: 100%;
   justify-content: space-between;
   align-items: center;
@@ -30,7 +29,7 @@ header {
   background: #243746;
   box-sizing: border-box;
   grid-auto-flow: column;
-  padding: 0 2rem;
+  padding: 0.5rem 2rem;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   z-index: 99;
 }
@@ -68,6 +67,5 @@ h1 {
 .profile img{
   height: 100%;
   width: 100%;
-  margin-bottom: 0.5rem;
 }
 </style>

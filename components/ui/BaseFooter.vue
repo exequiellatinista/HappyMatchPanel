@@ -54,6 +54,7 @@ footer {
   padding: 0 1rem;
   top: calc(100vh - 4rem);
   height: 3rem;
+  max-width:28.125rem;
   width: 80%;
   border-radius: 1rem;
   background: rgba(255, 0, 50, 0.8);
