@@ -27,7 +27,7 @@
     "nuxt": "2.15.7"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "7.14.7",
+    "@babel/eslint-parser": "7.15.0",
     "@commitlint/cli": "12.1.4",
     "@commitlint/config-conventional": "13.1.0",
     "@nuxtjs/color-mode": "2.0.10",
