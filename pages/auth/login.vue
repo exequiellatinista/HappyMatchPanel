@@ -8,7 +8,7 @@
       <input type="password" data-value="false" name="password" autocomplete="on" required="" class="jsx-3563808996">
       <div class="containerButton"><button class='buttonSubmit' type="submit">Acceder</button></div>
       <div class="socialButtons">
-      <SocialLoginButton type='google' />
+      <SocialLoginButton type='google' @click='loginWithGoogle' />
       <SocialLoginButton type='facebook' />
       </div>
       <span>
@@ -27,6 +27,20 @@ export default {
     SocialLoginButton,
     },
   layout: 'auth',
+  methods: {
+   async loginWithGoogle() {
+     try {
+       const provider = new this.$fireModule.auth.GoogleAuthProvider()
+       const result = await this.$fire.auth.signInWithPopup(provider)
+       console.log(result)
+
+     } catch (error) {
+       // TODO: show toast
+       console.error('Login error')
+     }
+   }
+  },
+  
 }
 </script>
 <style scoped>

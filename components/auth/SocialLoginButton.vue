@@ -1,5 +1,5 @@
 <template>
- <button :class="type">
+ <button :class="type" @click="$emit('click')">
    <GoogleIcon v-if="type=='google'" />
    <FacebookIcon v-else-if="type=='facebook'" />
  </button>
