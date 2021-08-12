@@ -3,14 +3,17 @@
     <ColorSwitch class="colorSwitch"/>
     <div class="loginBox">
       <h1>HappyMatch</h1>
+      <form  v-if="!isRegisterMode" class="loginForm">
       <p>Inicie sesión con su usuario y contraseña </p>
-      <input type="text" data-value="false" name="email" autocomplete="off" required="" class="">
-      <input type="password" data-value="false" name="password" autocomplete="on" required="" class="jsx-3563808996">
+      <input type="text" data-value="false" name="email" autocomplete="off" required="" placeholder="Usuario"/>
+      <input type="password" data-value="false" name="password" autocomplete="on" required="" placeholder="Password"/>
       <div class="containerButton"><button class='buttonSubmit' type="submit">Acceder</button></div>
       <div class="socialButtons">
-      <SocialLoginButton type='google' @click='loginWithGoogle' />
-      <SocialLoginButton type='facebook' />
+      <SocialLoginButton type='Google' @click='loginWithGoogle' />
+      <SocialLoginButton type='Facebook' />
+      <p class="register" @click='changeRegisterMode'>Registrarse</p>
       </div>
+      </form>
       <span>
         Powered by <a>Pollux</a>
       </span>
@@ -27,6 +30,9 @@ export default {
     SocialLoginButton,
     },
   layout: 'auth',
+  data: () => ({
+    isRegisterMode: false,
+  }),
   methods: {
    async loginWithGoogle() {
      try {
@@ -38,6 +44,9 @@ export default {
        // TODO: show toast
        console.error('Login error')
      }
+   },
+   changeRegisterMode() {
+     this.isRegisterMode = !this.isRegisterMode
    }
   },
   
@@ -71,6 +80,12 @@ export default {
     box-sizing: border-box;
   }
 
+  .loginForm {
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
   .containerButton {
     width:100%;
     display: flex;
@@ -79,11 +94,11 @@ export default {
 
   .buttonSubmit {
         font-weight: 500;
-    font-size: 14px;
+    font-size: 0.875rem;
     background-color: black;
     border: none;
-    padding: 7px 18px;
-    border-radius: 5px;
+    padding: 0.4375rem 1.125rem;
+    border-radius: 0.3125rem;
     overflow: hidden;
     cursor: pointer;
     color: white;
@@ -104,10 +119,10 @@ export default {
 
    input {
      width:100%;
-     padding: 16px 14px;
+     padding: 1rem 0.875rem;
      border: 1px solid var(--border-color);
      border-radius: 0.3125rem;
-     margin: 16px;
+     margin: 1rem;
    }
 
    a {
@@ -128,9 +143,15 @@ export default {
 
    .socialButtons {
      display: flex;
+     flex-direction: column;
      width:100%;
      align-items: center;
      justify-content: center;
-     margin-top:1rem
+     margin-top:1rem;
+   }
+
+   .register{
+     cursor: pointer;
+     font-weight: bold;
    }
 </style>

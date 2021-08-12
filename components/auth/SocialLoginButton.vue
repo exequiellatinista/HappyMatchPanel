@@ -1,7 +1,13 @@
 <template>
- <button :class="type" @click="$emit('click')">
-   <GoogleIcon v-if="type=='google'" />
-   <FacebookIcon v-else-if="type=='facebook'" />
+ <button @click="$emit('click')">
+   <div v-if="type==='Google'" class="Google">
+    <GoogleIcon/>
+    <p>Iniciar sesión con Google<p/>
+   </div>
+   <div v-else class="Facebook">
+    <FacebookIcon/>
+    <p>Iniciar sesión con Facebook<p/>
+   </div>
  </button>
 </template>
 <script>
@@ -15,7 +21,7 @@ export default {
     type: {
       type: String,
       required: true,
-      validate: (value) => ['google'].includes(value),
+      validate: (value) => ['Google'].includes(value),
     }
   }
   
@@ -23,26 +29,44 @@ export default {
 </script>
 <style scoped>
 button {
-  width: 3rem;
-  height: 3rem;
+  width: 100%;
+  height: 2rem;
   display:flex;
   align-items: center;
   justify-content: center;
+  margin: 0.25rem 0.3rem;
+  box-sizing: border-box;
+  cursor: pointer;
+  border:none;
+  border-radius: 0.5rem; 
+}
+button div {
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: right;
+  height: 100%;
+  width: 100%;
+  border-radius: 0.5rem; 
   border: solid 0.1rem var(--border-color);
-  margin: 0 0.3rem
+  color:white;
 }
 
+button div:nth-last-child {
+  display:none;
+}
 button svg {
-  width:100%;
-  height: 100%
+  width:4rem;
+  height: 100%;
+  fill:white;
 }
 
-.google {
-  background:transparent;
+.Google {
+  background:#de5246;
 }
 
-.facebook {
-  background:transparent;
+.Facebook {
+  background:#3b5998;
 }
   
 </style>

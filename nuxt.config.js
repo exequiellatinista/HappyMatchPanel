@@ -102,6 +102,13 @@ export default {
     emulatorHost: 'http://localhost',
   },
 
+  storybook: {
+    stories: [
+      '~/components/stories/**/*.stories.js',
+      '~/custom/path/sample.stories.js'
+    ],
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }
