@@ -2,7 +2,7 @@
   <footer>
     <div class="containerFooter">
       <nuxt-link v-for="(link, index) in links" :key="index" :to="link.url">
-        <component :is="link.component" :alt="link.name" class="icons"/>
+        <button><component :is="link.component" :alt="link.name" class="icons"/></button>
       </nuxt-link>
     </div>
   </footer>
@@ -64,5 +64,9 @@ footer {
 .icons {
   width: 2rem;
   height: 2rem;
+}
+button {
+  background: transparent;
+  border:none;
 }
 </style>
