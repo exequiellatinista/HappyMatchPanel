@@ -32,6 +32,7 @@ header {
   padding: 0.5rem 2rem;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   z-index: 99;
+  top:0;
 }
 .logoAndTitle {
   display: grid;

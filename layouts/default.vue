@@ -2,8 +2,10 @@
   <div>
     <BaseHeader />
     <v-main>
-      <v-container class="containerDefault">
+      <v-container>
+        <section class="containerDefault">
         <Nuxt />
+        </section>
       </v-container>
     </v-main>
     <BaseFooter />

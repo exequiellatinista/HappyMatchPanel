@@ -6,6 +6,7 @@
     --bg: #f3f5f4;
     --bg-secondary: #fff;
     --border-color: #d9dce0;
+    --padding-df: 0.2rem;
   }
   
   .dark-mode {

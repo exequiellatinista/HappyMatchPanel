@@ -1,9 +1,9 @@
 <template>
   <footer>
     <div class="containerFooter">
-      <Nuxtlink v-for="(link, index) in links" :key="index" :to="link.url">
+      <nuxt-link v-for="(link, index) in links" :key="index" :to="link.url">
         <component :is="link.component" :alt="link.name" class="icons"/>
-      </Nuxtlink>
+      </nuxt-link>
     </div>
   </footer>
 </template>
