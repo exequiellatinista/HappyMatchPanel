@@ -52,9 +52,6 @@ button div {
   color:white;
 }
 
-button div:nth-last-child {
-  display:none;
-}
 button svg {
   width:4rem;
   height: 100%;
