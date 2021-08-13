@@ -64,9 +64,11 @@ footer {
 .icons {
   width: 2rem;
   height: 2rem;
+  user-select: none
 }
 button {
   background: transparent;
   border:none;
+  user-select: none
 }
 </style>

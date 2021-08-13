@@ -33,6 +33,7 @@ header {
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   z-index: 99;
   top:0;
+  user-select: none
 }
 .logoAndTitle {
   display: grid;
@@ -45,12 +46,14 @@ header {
   height: 2rem;
   width: 2rem;
   fill: pink;
+  user-select: none
 }
 
 h1 {
   margin-left: 1rem;
   color: white;
   font-size: 24px;
+  user-select: none
 }
 
 .profile {
@@ -68,5 +71,6 @@ h1 {
 .profile img{
   height: 100%;
   width: 100%;
+  user-select: none
 }
 </style>
