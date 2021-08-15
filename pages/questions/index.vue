@@ -2,13 +2,13 @@
   <div>
     <div class='owner'>Hola Dueño1!</div>
     <div class='locals'>
-      <div v-for="local in locals" :key="local.id" class='local'>
+      <div v-for="local in locals" :key="local.localId" class='local'>
         <Locals :localname='local.name' @click="setLocalSelected(local)"/>
       </div>
     </div>
     <div class='questions'>
       <div v-if="localSelected.lenght!=0" class='local'>
-        <div v-for="question in localSelected.questions" :key="question.id + localSelected.id" class="question">
+        <div v-for="(question, index) in localSelected.questions" :key="localSelected.localId + index" class="question">
           <Question :question='question' />
         </div>
       </div>
@@ -28,67 +28,75 @@ export default {
   //   }
   // },
   data: () => ({
+    dataApi: {},
     localSelected: [],
     locals: [
-      {id:'0',
+      {clientId: '1234',
+      localId:'0',
       name:'Sable Santa Fe',
       questions:
         [
-          {id:1,
+          {
           question:'Te gusta el mc?',
           answers:[
-            {id:1,answer:'Si'},
-            {id:2,answer:'No'},
-            {id:3,answer:'Nose'},
+            {answer:'Si'},
+            {answer:'No'},
+            {answer:'Nose'},
           ]},
-          {id:2,
+          {
           question:'Te gusta el burguer?',
           answers:[
-            {id:1,answer:'Si'},
-            {id:2,answer:'No'},
-            {id:3,answer:'Nose'},
+            {answer:'Si'},
+            {answer:'No'},
+            {answer:'Nose'},
           ]},
-          {id:3,
+          {
           question:'Te gusta el mostaza?',
           answers:[
-            {id:1,answer:'Si'},
-            {id:2,answer:'No'},
-            {id:3,answer:'Nose'},
+            {answer:'Si'},
+            {answer:'No'},
+            {answer:'Nose'},
           ]},
         ]
       },
     
-      {id:'1',
+      {clientId: '566565',
+      localId:'1',
       name:'Sable Callao',
       questions:
         [
-          {id:1,
+          {
           question:'Te gusta capucchino',
           answers:[
-            {id:1,answer:'Si'},
-            {id:2,answer:'No'},
-            {id:3,answer:'Nose'},
+            {answer:'Si'},
+            {answer:'No'},
+            {answer:'Nose'},
           ]},
-          {id:2,
+          {
           question:'Te gustan las medialunas?',
           answers:[
-            {id:1,answer:'Si'},
-            {id:2,answer:'No'},
-            {id:3,answer:'Nose'},
+            {answer:'Si'},
+            {answer:'No'},
+            {answer:'Nose'},
           ]},
-          {id:3,
+          {
           question:'Te gustan las tostadas?',
           answers:[
-            {id:1,answer:'Si'},
-            {id:2,answer:'No'},
-            {id:3,answer:'Nose'},
+            {answer:'Si'},
+            {answer:'No'},
+            {answer:'Nose'},
           ]},
         ]
       },]
   }),
+  async mounted() {
+    const res = await fetch('http://primeraprueba1.herokuapp.com/api/respuestas')
+      const data = await res.json()
+      this.dataApi = data
+  },
   methods: {
-    setLocalSelected(idLocal){
-      this.localSelected = this.locals.find(l => l.id === idLocal.id)
+    setLocalSelected(local){
+      this.localSelected = this.locals.find(l => l.localId === local.localId)
     }
   }
 }
@@ -101,5 +109,11 @@ export default {
     justify-content: start;
     align-items: center;
     gap: 0 0.5rem;
+  }
+  .questions {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>
