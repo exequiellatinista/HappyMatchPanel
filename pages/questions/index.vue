@@ -12,15 +12,19 @@
           <Question :question='question' />
         </div>
       </div>
+      <div class="newQuestion">  
+        <AddButton type='normal' @click='addNewQuestion()'/>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import Locals from '@/components/questions/Locals.vue'
 import Question from '@/components/questions/Question.vue'
+import AddButton from '@/components/questions/tools/AddButton.vue'
 export default {
   name: 'QuestionsIndex',
-  components: {Locals, Question},
+  components: { Locals, Question, AddButton },
   // props: {
   //   owner: {
   //     type: Object,
@@ -31,94 +35,165 @@ export default {
     dataApi: {},
     localSelected: [],
     locals: [
-      {clientId: '1234',
-      localId:'0',
-      name:'Sable Santa Fe',
-      questions:
-        [
+      {
+        clientId: '1234',
+        localId: '0',
+        name: 'Sable Santa Fe',
+        questions: [
           {
-          question:'Te gusta el mc?',
-          answers:[
-            {answer:'Si'},
-            {answer:'No'},
-            {answer:'Nose'},
-          ]},
+            question: 'Te gusta el mc?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
           {
-          question:'Te gusta el burguer?',
-          answers:[
-            {answer:'Si'},
-            {answer:'No'},
-            {answer:'Nose'},
-          ]},
+            question: 'Te gusta el burguer?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
           {
-          question:'Te gusta el mostaza?',
-          answers:[
-            {answer:'Si'},
-            {answer:'No'},
-            {answer:'Nose'},
-          ]},
-        ]
+            question: 'Te gusta el mostaza?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+          {
+            question: 'Te gusta el mostaza?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+          {
+            question: 'Te gusta el mostaza?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+          {
+            question: 'Te gusta el mostaza?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+          {
+            question: 'Te gusta el mostaza?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+        ],
       },
-    
-      {clientId: '566565',
-      localId:'1',
-      name:'Sable Callao',
-      questions:
-        [
+
+      {
+        clientId: '566565',
+        localId: '1',
+        name: 'Sable Callao',
+        questions: [
           {
-          question:'Te gusta capucchino',
-          answers:[
-            {answer:'Si'},
-            {answer:'No'},
-            {answer:'Nose'},
-          ]},
+            question: 'Te gusta capucchino',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
           {
-          question:'Te gustan las medialunas?',
-          answers:[
-            {answer:'Si'},
-            {answer:'No'},
-            {answer:'Nose'},
-          ]},
+            question: 'Te gustan las medialunas?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
           {
-          question:'Te gustan las tostadas?',
-          answers:[
-            {answer:'Si'},
-            {answer:'No'},
-            {answer:'Nose'},
-          ]},
-        ]
-      },]
+            question: 'Te gustan las tostadas?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+        ],
+      },
+
+      {
+        clientId: '4579765',
+        localId: '3434321',
+        name: 'Sable Callao',
+        questions: [
+          {
+            question: 'Te gusta capucchino',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+          {
+            question: 'Te gustan las medialunas?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+          {
+            question: 'Te gustan las tostadas?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+        ],
+      },
+
+      {
+        clientId: '54656',
+        localId: '4341',
+        name: 'Sable Callao',
+        questions: [
+          {
+            question: 'Te gusta capucchino',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+          {
+            question: 'Te gustan las medialunas?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+          {
+            question: 'Te gustan las tostadas?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+        ],
+      },
+
+      {
+        clientId: '13257',
+        localId: '133',
+        name: 'Sable Callao',
+        questions: [
+          {
+            question: 'Te gusta capucchino',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+          {
+            question: 'Te gustan las medialunas?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+          {
+            question: 'Te gustan las tostadas?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+        ],
+      },
+    ],
   }),
   async mounted() {
-    this.localSelected = this.locals.find(l => l);
-    const res = await fetch('http://primeraprueba1.herokuapp.com/api/respuestas')
-      const data = await res.json()
-      this.dataApi = data
+    this.localSelected = this.locals.find((l) => l)
+    const res = await fetch(
+      'http://primeraprueba1.herokuapp.com/api/respuestas'
+    )
+    const data = await res.json()
+    this.dataApi = data
   },
   methods: {
-    setLocalSelected(local){
-      this.localSelected = this.locals.find(l => l.localId === local.localId)
+    setLocalSelected(local) {
+      this.localSelected = this.locals.find((l) => l.localId === local.localId)
+    },
+    addNewQuestion() {
+     this.localSelected.questions.push( {
+            question: '',
+            answers: [],
+          })
     }
-  }
+  },
 }
 </script>
 
 <style scoped>
-  .locals {
-    display: grid;
-     grid-auto-flow: column;
-    justify-content: start;
-    align-items: center;
-    gap: 0 0.5rem;
-  }
-  .questions {
-    margin-top: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .owner {
-    font-weight: bolder;
-    font-size: 2rem;
-  }
+.locals {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  align-items: center;
+  gap: 0 0.5rem;
+}
+.questions {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.owner {
+  font-weight: bolder;
+  font-size: 2rem;
+}
+.newQuestion {
+  height: 8rem;
+}
 </style>

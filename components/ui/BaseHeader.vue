@@ -20,11 +20,11 @@ export default {
 </script>
 <style scoped>
 header {
+  position: fixed;
   display: grid;
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
   border-bottom: solid 1px;
   background: #243746;
   box-sizing: border-box;

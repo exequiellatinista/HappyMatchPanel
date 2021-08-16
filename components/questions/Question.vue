@@ -1,14 +1,15 @@
 <template>
-  <form :class="classContainer">
+  <form class="questionContainer">
     <ConfirmModal v-if="showModal" @clickDelete="deleteQuestion()" @click='changeShowModal()'/>
     <div v-if="!showModal" class="questionButtons" @click='changeShowModal()'>
       <img src="@/assets/icons/delete.svg"/>
     </div>
     <input class="questionName" :value="question.question"/>
   <div class="answers">
-    <div v-for="answer in question.answers" :key="answer.answer + question.question" class="answer">
+    <div v-for="answer in localAnswers" :key="answer.answer + question.question" class="answer">
       <Answer :answerprop='answer.answer'/>
     </div>
+    <AddButton type='mini' @click='addNewAnswer()'/>
   </div>
   </form>
 </template>
@@ -16,11 +17,13 @@
 <script>
 import ConfirmModal from '@/components/questions/tools/ConfirmModal.vue'
 import Answer from '@/components/questions/Answer.vue'
+import AddButton from './tools/AddButton.vue'
 export default {
   name:'Question',
   components: {
     ConfirmModal,
-    Answer
+    Answer,
+    AddButton
   },
   props: {
     question: {
@@ -29,15 +32,21 @@ export default {
     }
   },
   data:  () => ({
-    classContainer: "questionContainer",
-    showModal: false
+    showModal: false,
+    localAnswers: [],
   }),
+  mounted() {
+    this.localAnswers= this.question.answers
+  },
   methods: {
     changeShowModal() {
       this.showModal =! this.showModal
     },
     deleteQuestion() {
       this.classContainer = "deletedQuestion"
+    },
+    addNewAnswer(){
+     this.localAnswers.push({answer:''})
     }
   }
 }

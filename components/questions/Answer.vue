@@ -1,6 +1,6 @@
 <template>
   <form  v-if="showAnswer" class="answerContainer">
-    <input class="answerInput" :value='answerprop' />
+    <input class="answerInput" :value='answerprop' :placeholder='[answerprop=="" & "+"]'/>
     <div class="deleteAnswer" @click='changeShowAnswer()'><img src="@/assets/icons/deletemini.svg"/></div>
   </form>
 </template>
@@ -9,7 +9,7 @@ export default {
   name: 'Answer',
   props: {
     answerprop: {
-      type: Object,
+      type: String,
       required: true
     }
   },
@@ -33,7 +33,7 @@ export default {
   .deleteAnswer {
     position: absolute;
     top: 0;
-    left: 100%;
+    left: calc(100% - 1rem);
     fill:black;
     height: 100%;
     display: flex;
@@ -52,5 +52,7 @@ export default {
     border-radius: 0.2rem;
     width: 100%;
     height: 100%;
+    padding: 0 1rem 0 0;
+    box-sizing: border-box;
   }
 </style>
