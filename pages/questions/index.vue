@@ -3,7 +3,7 @@
     <div class='owner'>Hola Dueño1!</div>
     <div class='locals'>
       <div v-for="local in locals" :key="local.localId" class='local'>
-        <Locals :localname='local.name' @click="setLocalSelected(local)"/>
+        <Locals :localprop='{local, localSelected}' @click="setLocalSelected(local)"/>
       </div>
     </div>
     <div class='questions'>
@@ -90,6 +90,7 @@ export default {
       },]
   }),
   async mounted() {
+    this.localSelected = this.locals.find(l => l);
     const res = await fetch('http://primeraprueba1.herokuapp.com/api/respuestas')
       const data = await res.json()
       this.dataApi = data
@@ -111,9 +112,13 @@ export default {
     gap: 0 0.5rem;
   }
   .questions {
-    margin-top: 2rem;
+    margin-top: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .owner {
+    font-weight: bolder;
+    font-size: 2rem;
   }
 </style>

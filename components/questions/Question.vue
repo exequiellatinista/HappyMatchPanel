@@ -1,22 +1,26 @@
 <template>
-  <form class="questionContainer">
-    <ConfirmModal v-if="showModal"/>
-    <div class="questionButtons" @click='changeShowModal()'>
+  <form :class="classContainer">
+    <ConfirmModal v-if="showModal" @clickDelete="deleteQuestion()" @click='changeShowModal()'/>
+    <div v-if="!showModal" class="questionButtons" @click='changeShowModal()'>
       <img src="@/assets/icons/delete.svg"/>
     </div>
     <input class="questionName" :value="question.question"/>
   <div class="answers">
-    <input v-for="answer in question.answers" :key="answer.answer + question.question" class="answer" :value="answer.answer" />
+    <div v-for="answer in question.answers" :key="answer.answer + question.question" class="answer">
+      <Answer :answerprop='answer.answer'/>
+    </div>
   </div>
   </form>
 </template>
 
 <script>
 import ConfirmModal from '@/components/questions/tools/ConfirmModal.vue'
+import Answer from '@/components/questions/Answer.vue'
 export default {
   name:'Question',
   components: {
-    ConfirmModal
+    ConfirmModal,
+    Answer
   },
   props: {
     question: {
@@ -25,17 +29,24 @@ export default {
     }
   },
   data:  () => ({
+    classContainer: "questionContainer",
     showModal: false
   }),
   methods: {
     changeShowModal() {
       this.showModal =! this.showModal
+    },
+    deleteQuestion() {
+      this.classContainer = "deletedQuestion"
     }
   }
 }
 </script>
 
 <style scoped>
+  .deletedQuestion {
+    display:none;
+  }
   .questionContainer {
     position: relative;
     display:flex;
@@ -56,18 +67,7 @@ export default {
     grid-auto-flow: row;
     gap: 0.5rem 0;
     padding-bottom: 0.5rem;
-    border-bottom: solid 0.1rem var(--border-color);
     width: 100%;
-  }
-
-  .answer {
-    border: solid 0.1rem var(--border-color);
-    border-radius: 0.2rem;
-    height: 1.5rem;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    cursor: text;
   }
 
   .questionName {
@@ -83,7 +83,6 @@ export default {
     position:absolute;
     top:-1.5rem;
     left: calc(100% - 50px);
-    z-index:99;
     opacity: 0;
     width: 3rem;
     height: 3rem;
@@ -102,4 +101,5 @@ export default {
   .questionContainer:hover .questionButtons{
     opacity:1;
   }
+
 </style>

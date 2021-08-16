@@ -3,15 +3,15 @@
     <div class="confirmBox">
       <p>¿Confirma que desea eliminar la pregunta?</p>
       <div class="buttons">
-        <button>Si</button>
-        <button>Cancelar</button>
+        <button @click.prevent="$emit('clickDelete')">Si</button>
+        <button @click.prevent="$emit('click')">Cancelar</button>
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
-  
+  name: 'ConfirmModal'
 }
 </script>
 <style scoped>
@@ -23,7 +23,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white
+    color: white;
+    z-index:98;
   }
   .confirmBox {
     display: flex;
