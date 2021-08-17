@@ -1,5 +1,5 @@
 <template>
-  <form class="questionContainer">
+  <form :class="classContainer">
     <ConfirmModal v-if="showModal" @clickDelete="deleteQuestion()" @click='changeShowModal()'/>
     <div v-if="!showModal" class="questionButtons" @click='changeShowModal()'>
       <img src="@/assets/icons/delete.svg"/>
@@ -32,6 +32,7 @@ export default {
     }
   },
   data:  () => ({
+    classContainer: 'questionContainer',
     showModal: false,
     localAnswers: [],
   }),
@@ -61,7 +62,6 @@ export default {
     display:flex;
     align-items: center;
     justify-content: center;
-    width: 90vw;
     flex-direction: column;
     background: rgba(0, 0, 0, 0.1);
     padding: 1rem;

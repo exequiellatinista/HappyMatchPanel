@@ -1,5 +1,5 @@
 <template lang="">
-  <div>
+  <div class="indexQuestionContainer">
     <div class='owner'>Hola Dueño1!</div>
     <div class='locals'>
       <div v-for="local in locals" :key="local.localId" class='local'>
@@ -175,19 +175,24 @@ export default {
 </script>
 
 <style scoped>
+.indexQuestionContainer{
+  width:100%;
+}
 .locals {
   display: grid;
   grid-auto-flow: column;
   justify-content: start;
   align-items: center;
   gap: 0 0.5rem;
+  overflow: scroll;
 }
 .questions {
-  margin-top: 1rem;
+  margin: 1rem auto auto auto;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  width: 100%;
 }
 .owner {
   font-weight: bolder;
