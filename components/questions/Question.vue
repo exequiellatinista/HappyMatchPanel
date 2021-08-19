@@ -63,11 +63,14 @@ export default {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background: rgba(0, 0, 0, 0.1);
     padding: 1rem;
     margin-bottom: 1rem;
-    box-shadow: 1px 4px 9px -1px rgba(0,0,0,0.58);
-    border-radius: 0.5rem;
+    border-radius: 0.3rem;
+    background: #e1e7e9;
+  }
+
+  .questionContainer:nth-child(2) {
+    background:#c5caff;
   }
 
 

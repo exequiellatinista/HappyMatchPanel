@@ -174,7 +174,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .indexQuestionContainer{
   width:100%;
 }
@@ -200,5 +200,9 @@ export default {
 }
 .newQuestion {
   height: 8rem;
+}
+.local {
+    width: 90%;
+  margin:auto;
 }
 </style>
