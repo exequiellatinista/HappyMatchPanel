@@ -9,7 +9,7 @@
     <div class='questions'>
       <div v-if="localSelected.lenght!=0" class="questionsSelected">
         <div v-for="(question, index) in localSelected.questions" :key="localSelected.localId + index" class="question">
-          <Question :question='question' />
+          <Question :info='{question, index}' />
         </div>
              <div class="newQuestion">  
         <AddButton type='normal' @click='addNewQuestion()'/>

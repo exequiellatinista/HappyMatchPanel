@@ -10,9 +10,9 @@
         <img class="editImg" src="@/assets/icons/delete.svg"/>
       </div>
     </div>
-    <input class="questionName" :value="question.question"/>
+    <input class="questionName" :value="info.question.question"/>
   <div class="answers">
-    <div v-for="answer in localAnswers" :key="answer.answer + question.question" class="answer">
+    <div v-for="answer in localAnswers" :key="answer.answer + info.question.question" class="answer">
       <Answer :answerprop='answer.answer'/>
     </div>
     <div class="footerQuestion">
@@ -35,7 +35,7 @@ export default {
     // AddButton
   },
   props: {
-    question: {
+    info: {
       type: Object,
       required: true
     }
@@ -44,9 +44,18 @@ export default {
     classContainer: 'questionContainer',
     showModal: false,
     localAnswers: [],
+    classColor: '',
+    colorArray: [
+      '#e1e7e9',
+      '#c5caff',
+      '#fcdae5',
+      '#e9faf5'
+    ]
   }),
   mounted() {
-    this.localAnswers= this.question.answers
+    this.localAnswers= this.info.question.answers
+    this.classColor = this.colorArray[((this.info.index + 1)%4 * 4 - 1)
+    ]
   },
   methods: {
     changeShowModal() {
