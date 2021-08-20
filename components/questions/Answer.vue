@@ -54,5 +54,6 @@ export default {
     height: 100%;
     padding: 0 1rem 0 0;
     box-sizing: border-box;
+        background: rgba(256,256,256,0.7);
   }
 </style>

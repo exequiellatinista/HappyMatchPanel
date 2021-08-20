@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class='questions'>
-      <div v-if="localSelected.lenght!=0" class='local'>
+      <div v-if="localSelected.lenght!=0" class="questionsSelected">
         <div v-for="(question, index) in localSelected.questions" :key="localSelected.localId + index" class="question">
           <Question :question='question' />
         </div>
@@ -165,18 +165,18 @@ export default {
       this.localSelected = this.locals.find((l) => l.localId === local.localId)
     },
     addNewQuestion() {
-     this.localSelected.questions.push( {
-            question: '',
-            answers: [],
-          })
-    }
+      this.localSelected.questions.push({
+        question: '',
+        answers: [],
+      })
+    },
   },
 }
 </script>
 
 <style>
-.indexQuestionContainer{
-  width:100%;
+.indexQuestionContainer {
+  width: 100%;
 }
 .locals {
   display: grid;
@@ -193,6 +193,7 @@ export default {
   justify-content: center;
   flex-direction: column;
   width: 100%;
+  box-sizing: border-box;
 }
 .owner {
   font-weight: bolder;
@@ -202,7 +203,17 @@ export default {
   height: 8rem;
 }
 .local {
-    width: 90%;
-  margin:auto;
+  max-width: 100%;
+  margin: auto;
+  display: grid;
+  box-sizing: border-box;
+}
+
+.questionsSelected {
+  padding: 1rem;
+  display: grid;
+  width:calc(100% - 2rem);
+  grid-gap: 1rem;
+grid-template-columns: repeat( auto-fit, minmax(20rem, 1fr) );
 }
 </style>

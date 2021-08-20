@@ -24,10 +24,11 @@ export default {
 
   .mini {
     width: 5rem;
-    height: 1.3rem;
-    background: #2437467c;
+    height: 2rem;
+    background: #5298f1;
     font-size: 1rem;
-    color:white;
+    color:black;
+    border-radius: 1rem;
   }
 
   .normal {
