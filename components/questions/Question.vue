@@ -77,7 +77,8 @@ export default {
     background: #e1e7e9;
     max-width: 30rem;
     min-width:20rem;
-     overflow: hidden;
+    min-height: 12rem;
+    overflow: hidden;
   }
 
   .questionContainer:nth-child(2) {

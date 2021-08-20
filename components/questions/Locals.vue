@@ -1,7 +1,10 @@
 <template>
   <div class="default" @click="$emit('click')">
-    <span  v-if="localprop.local.localId === localprop.localSelected.localId" class='selected'></span>
-    {{localprop.local.name}}
+    <span
+      v-if="localprop.local.localId === localprop.localSelected.localId"
+      class="selected"
+    ></span>
+    {{ localprop.local.name }}
   </div>
 </template>
 <script>
@@ -19,28 +22,33 @@ export default {
 }
 </script>
 <style scoped>
-  .default {
+.default {
   position: relative;
   margin-top: 1rem;
   width: 15rem;
   height: 2.5rem;
   background: var(--bg-secondary);
   border: solid 0.1rem var(--border-color);
+  border-bottom: none;
   border-radius: 0.3rem 0.3rem 0 0;
   padding: var(--padding-df);
   box-sizing: border-box;
   text-align: center;
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  cursor:pointer;
-  }
+  cursor: pointer;
+}
 
-  .selected {
-    position: absolute;
-    top:100%;
-    width:100%;
-    height: 0.1rem;
-    background: rgba(255, 0, 50, 0.8);
-  }
+.selected {
+  position: absolute;
+  top: -2px;
+  width: calc(100% + 0.2rem);
+  height: 100%;
+  background: transparent;
+  border-top: 2px solid red;
+  border-bottom: 2px solid white;
+  border-radius: 0.3rem 0.3rem 0 0;
+  z-index: 4;
+}
 </style>
