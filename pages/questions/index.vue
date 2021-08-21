@@ -185,6 +185,7 @@ export default {
   align-items: center;
   gap: 0 0.5rem;
   border-bottom: solid 1px var(--border-color);
+  user-select: none;
 }
 .questions {
   margin: 1rem auto auto auto;

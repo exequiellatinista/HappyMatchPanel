@@ -40,7 +40,7 @@ header {
 }
 .icons {
   height: 4rem;
-  width: 12rem;
+  width: 10rem;
   fill: pink;
   user-select: none
 }

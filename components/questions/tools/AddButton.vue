@@ -20,6 +20,7 @@ export default {
     align-items: center;
     justify-content: center;
     border: none;
+    user-select: none;
   }
 
   .mini {

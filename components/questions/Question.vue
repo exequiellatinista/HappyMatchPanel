@@ -1,5 +1,5 @@
 <template>
-  <form :class="classContainer">
+  <form :class="classContainer" :style="{'background-color':classColor}">
     <ConfirmModal v-if="showModal" @clickDelete="deleteQuestion()" @click='changeShowModal()'/>
     <div class="questionHeader">
       <div class="active">
@@ -47,15 +47,15 @@ export default {
     classColor: '',
     colorArray: [
       '#e1e7e9',
-      '#c5caff',
-      '#fcdae5',
-      '#e9faf5'
+      '#dedde7',
+      '#dde7de',
+      '#d1d6df'
     ]
   }),
   mounted() {
     this.localAnswers= this.info.question.answers
-    this.classColor = this.colorArray[((this.info.index + 1)%4 * 4 - 1)
-    ]
+    this.classColor = this.colorArray[( (((this.info.index + 1) / 4) - Math.trunc((this.info.index + 1)/4)) * 4)]
+    console.log(( (((this.info.index + 1) / 4) - Math.trunc((this.info.index + 1)/4)) * 4))
   },
   methods: {
     changeShowModal() {
@@ -89,11 +89,6 @@ export default {
     min-height: 12rem;
     overflow: hidden;
   }
-
-  .questionContainer:nth-child(2) {
-    background:#c5caff;
-  }
-
 
   .answers {
     display: grid;
@@ -180,6 +175,7 @@ export default {
     background: rgba(0,0,0,0.1);
     border-radius: 5rem;
     z-index: 1;
+    user-select: none;
   }
   .editImg {
     width: 2rem;
