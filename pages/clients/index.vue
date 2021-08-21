@@ -12,18 +12,21 @@
       </div>
     </div>
     <div v-if="selected == 'allowed'" class="listAllowed">
-      <div></div>
+      <div v-for="table in tables" :key="table.id"><Client :info='table'/></div>
     </div>
     <div v-if="selected == 'banned'" class="listBanned"></div>
   </div>
 </template>
 <script>
+import Client from '~/components/clients/Client.vue'
 export default {
   name: 'ClientIndex',
+  components: {Client},
   data: () => ({
     selected: 'allowed',
     tables: [
       {
+        id: '1',
         mainUser: {
           name: 'José',
           banned: false,
@@ -33,6 +36,7 @@ export default {
         reports: 0,
       },
       {
+         id: '2',
         mainUser: {
           name: 'Brian',
           banned: false,
@@ -42,6 +46,7 @@ export default {
         reports: 3,
       },
       {
+         id: '3',
         mainUser: {
           name: 'Sofia',
           banned: false,
@@ -51,6 +56,7 @@ export default {
         reports: 0,
       },
       {
+         id: '4',
         mainUser: {
           name: 'Emanuel',
           banned: false,
@@ -60,6 +66,7 @@ export default {
         reports: 0,
       },
       {
+         id: '5',
         mainUser: {
           name: 'Roberto',
           banned: false,
@@ -69,6 +76,7 @@ export default {
         reports: 0,
       },
       {
+         id: '6',
         mainUser: {
           name: 'Maria',
           banned: false,
