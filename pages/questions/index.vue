@@ -6,6 +6,7 @@
         <Locals :localprop='{local, localSelected}' @click="setLocalSelected(local)"/>
       </div>
     </div>
+    <div class="localContainer">
     <div class='questions'>
       <div v-if="localSelected.lenght!=0" class="questionsSelected">
         <div v-for="(question, index) in localSelected.questions" :key="localSelected.localId + index" class="question">
@@ -16,15 +17,22 @@
       </div>
       </div>
     </div>
+    <div class="users">
+      <div v-for="table in localSelected.tables" :key="localSelected.localId + table.id" class="user">
+        <Client :info="table"/>
+      </div>
+    </div>
+    </div>
   </div>
 </template>
 <script>
 import Locals from '@/components/questions/Locals.vue'
 import Question from '@/components/questions/Question.vue'
+import Client from '@/components/clients/Client.vue'
 import AddButton from '@/components/questions/tools/AddButton.vue'
 export default {
   name: 'QuestionsIndex',
-  components: { Locals, Question, AddButton },
+  components: { Locals, Question, AddButton, Client },
   // props: {
   //   owner: {
   //     type: Object,
@@ -69,6 +77,68 @@ export default {
             answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
           },
         ],
+        tables: [
+          {
+            id: '1',
+            mainUser: {
+              name: 'José',
+              banned: false,
+            },
+            img: '@/assets/images/perfiles.jpg',
+            tableName: 'Mesa 1',
+            reports: 0,
+          },
+          {
+            id: '2',
+            mainUser: {
+              name: 'Brian',
+              banned: false,
+            },
+            img: '@/assets/images/perfiles.jpg',
+            tableName: 'Mesa 2',
+            reports: 3,
+          },
+          {
+            id: '3',
+            mainUser: {
+              name: 'Sofia',
+              banned: false,
+            },
+           img: '@/assets/images/perfiles.jpg',
+            tableName: 'Mesa 3',
+            reports: 0,
+          },
+          {
+            id: '4',
+            mainUser: {
+              name: 'Emanuel',
+              banned: false,
+            },
+            img: '@/assets/images/perfiles.jpg',
+            tableName: 'Mesa 4',
+            reports: 0,
+          },
+          {
+            id: '5',
+            mainUser: {
+              name: 'Roberto',
+              banned: false,
+            },
+            img: '@/assets/images/perfiles.jpg',
+            tableName: 'Mesa 5',
+            reports: 0,
+          },
+          {
+            id: '6',
+            mainUser: {
+              name: 'Maria',
+              banned: false,
+            },
+            img: '@/assets/images/perfiles.jpg',
+            tableName: 'Mesa 6',
+            reports: 0,
+          },
+        ],
       },
 
       {
@@ -89,64 +159,66 @@ export default {
             answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
           },
         ],
-      },
-
-      {
-        clientId: '4579765',
-        localId: '3434321',
-        name: 'Sable Callao',
-        questions: [
+        tables: [
           {
-            question: 'Te gusta capucchino',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: '1',
+            mainUser: {
+              name: 'Tiago',
+              banned: false,
+            },
+            img: '@/assets/images/perfiles.jpg',
+            tableName: 'Mesa 1',
+            reports: 0,
           },
           {
-            question: 'Te gustan las medialunas?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: '2',
+            mainUser: {
+              name: 'Leandro',
+              banned: false,
+            },
+            img: '@/assets/images/perfiles.jpg',
+            tableName: 'Mesa 2',
+            reports: 3,
           },
           {
-            question: 'Te gustan las tostadas?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
-          },
-        ],
-      },
-
-      {
-        clientId: '54656',
-        localId: '4341',
-        name: 'Sable Callao',
-        questions: [
-          {
-            question: 'Te gusta capucchino',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: '3',
+            mainUser: {
+              name: 'Maria',
+              banned: false,
+            },
+            img: '@/assets/images/perfiles.jpg',
+            tableName: 'Mesa 3',
+            reports: 0,
           },
           {
-            question: 'Te gustan las medialunas?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: '4',
+            mainUser: {
+              name: 'Carlos',
+              banned: false,
+            },
+            img: '@/assets/images/perfiles.jpg',
+            tableName: 'Mesa 4',
+            reports: 0,
           },
           {
-            question: 'Te gustan las tostadas?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
-          },
-        ],
-      },
-
-      {
-        clientId: '13257',
-        localId: '133',
-        name: 'Sable Callao',
-        questions: [
-          {
-            question: 'Te gusta capucchino',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: '5',
+            mainUser: {
+              name: 'Luka',
+              banned: false,
+            },
+            img: '@/assets/images/perfiles.jpg',
+            tableName: 'Mesa 5',
+            reports: 0,
           },
           {
-            question: 'Te gustan las medialunas?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
-          },
-          {
-            question: 'Te gustan las tostadas?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: '6',
+            mainUser: {
+              name: 'John',
+              banned: false,
+            },
+            img: '@/assets/images/perfiles.jpg',
+            tableName: 'Mesa 6',
+            reports: 0,
           },
         ],
       },
@@ -187,14 +259,22 @@ export default {
   border-bottom: solid 1px var(--border-color);
   user-select: none;
 }
+.localContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 1rem;
+  box-sizing: border-box;
+  padding: 1rem 1rem 0 1rem;
+}
 .questions {
-  margin: 1rem auto auto auto;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
+  border: solid 1px var(--border-color);
 }
 .owner {
   font-size: 1rem;
@@ -227,5 +307,10 @@ export default {
   width: calc(100% - 2rem);
   grid-gap: 1.3rem;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+}
+
+.users {
+  width: 100%;
+  border: solid 1px var(--border-color);
 }
 </style>

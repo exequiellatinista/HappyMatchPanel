@@ -1,6 +1,7 @@
 <template>
   <div class="clientContainer">
     <div>{{info.mainUser.name}}</div>
+    <img src='@/assets/images/perfiles.jpg'/>
   </div>
 </template>
 
@@ -14,7 +15,9 @@ export default {
       default: () => ({})
     },
   },
-  data: () => ({}),
+  data: () => ({
+    srcImg: ''
+  }),
   //  {
   //       id: '1',
   //       mainUser: {
@@ -26,17 +29,16 @@ export default {
   //       reports: 0,
   //     },
      mounted: () => {
-      console.log('')
     }
 }
 </script>
 
 <style scoped>
   .clientContainer {
-    width: 10rem;
-    height: 5rem;
+    width: 100%;
+    height: 3rem;
     background: burlywood;
-    border: solid 0.2rem var(--border-color);
+    border: solid 0.1rem var(--border-color);
     border-radius: 0.3rem;
   }
 </style>
