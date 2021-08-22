@@ -1,7 +1,7 @@
 <template>
   <form  v-if="showAnswer" class="answerContainer">
     <input class="answerInput" :value='answerprop' :placeholder='[answerprop=="" & "+"]'/>
-    <div class="deleteAnswer" @click='changeShowAnswer()'><img src="@/assets/icons/deletemini.svg"/></div>
+    <div class="deleteAnswer" @click='changeShowAnswer()'><img src="@/assets/icons/cancel.svg"/></div>
   </form>
 </template>
 <script>

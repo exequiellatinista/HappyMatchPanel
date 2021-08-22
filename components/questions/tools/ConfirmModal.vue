@@ -3,8 +3,8 @@
     <div class="confirmBox">
       <p>¿Confirma que desea eliminar la pregunta?</p>
       <div class="buttons">
-        <button @click.prevent="$emit('clickDelete')">Si</button>
-        <button @click.prevent="$emit('click')">Cancelar</button>
+        <button class="confirmButton" @click.prevent="$emit('clickDelete')"><img src="@/assets/icons/confirm.svg"></button>
+        <button class="cancelButton" @click.prevent="$emit('click')"><img src="@/assets/icons/cancel.svg"></button>
       </div>
     </div>
   </div>
@@ -37,9 +37,12 @@ export default {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    margin-top: 1rem;
   }
 
   .buttons button {
     width: calc(50% - 5px);
+    border-radius: 0.5rem;
+    border: none;
   }
 </style>

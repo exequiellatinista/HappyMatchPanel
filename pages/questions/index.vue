@@ -18,6 +18,11 @@
       </div>
     </div>
     <div class="users">
+      <div class="filterContainer">
+        <form>
+          <input placeholder="Buscar..">
+        </form>
+      </div>
       <div v-for="table in localSelected.tables" :key="localSelected.localId + table.id" class="user">
         <Client :info="table"/>
       </div>
@@ -261,17 +266,17 @@ export default {
 }
 .localContainer {
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   gap: 0 1rem;
   box-sizing: border-box;
   padding: 1rem 1rem 0 1rem;
 }
 .questions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  display: grid;
+     align-items: start;
+    justify-items: center;
   width: 100%;
   box-sizing: border-box;
   border: solid 1px var(--border-color);
@@ -293,6 +298,7 @@ export default {
   min-height: 12rem;
   overflow: hidden;
   border: dashed rgba(0, 0, 0, 0.1) 2px;
+   box-sizing: border-box;
 }
 .local {
   max-width: 100%;
@@ -307,10 +313,44 @@ export default {
   width: calc(100% - 2rem);
   grid-gap: 1.3rem;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+   box-sizing: border-box;
 }
 
 .users {
   width: 100%;
   border: solid 1px var(--border-color);
+  display: grid;
+  padding: 1rem;
+  box-sizing: border-box;
+  align-items: start;
+  justify-items: center;
+  gap: 1rem 0;
+  padding-top: 5rem;
+  position: relative;
+}
+.filterContainer {
+  position: absolute;
+  top:0;
+  height: 2rem;
+  width: 100%;
+  background: #f3f3f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.filterContainer form {
+  width: 100%;
+    display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.filterContainer input {
+  position: relative;
+  top: 1rem;
+  height: 2rem;
+  width: 80%;
+  border: none;
+      box-shadow: 0 8px 20px rgb(0 0 0 / 6%);
+    border-radius: 8px;
 }
 </style>

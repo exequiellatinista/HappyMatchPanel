@@ -88,6 +88,7 @@ export default {
     min-width:20rem;
     min-height: 12rem;
     overflow: hidden;
+      box-sizing: border-box;
   }
 
   .answers {
