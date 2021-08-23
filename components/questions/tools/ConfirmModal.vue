@@ -44,5 +44,6 @@ export default {
     width: calc(50% - 5px);
     border-radius: 0.5rem;
     border: none;
+    cursor: pointer;
   }
 </style>

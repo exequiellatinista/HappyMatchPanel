@@ -1,6 +1,6 @@
 <template>
   <form :class="classContainer" :style="{'background-color':classColor}">
-    <ConfirmModal v-if="showModal" @clickDelete="deleteQuestion()" @click='changeShowModal()'/>
+    <ConfirmModal v-if="showModal" @click='changeShowModal()' @clickDelete="changeShowModal(),$emit('clickDeleteQuestion')" />
     <div class="questionHeader">
       <div class="active">
         <div class="activeColor"></div>
@@ -86,7 +86,7 @@ export default {
     background: #e1e7e9;
     max-width: 30rem;
     min-width:20rem;
-    min-height: 12rem;
+    min-height: 15rem;
     overflow: hidden;
       box-sizing: border-box;
   }
@@ -110,6 +110,7 @@ export default {
     border:none;
     border-radius: 0.5rem;
     padding: 0 0.5rem;
+    margin-top: 2rem;
   }
 
   .questionButtons {
@@ -136,13 +137,14 @@ export default {
   }
 
   .questionHeader {
-    height: 20%;
-    width: 100%;
-     display: grid;
+    height: 2rem;
+    width: 92%;
+    display: grid;
     justify-content: space-between;
     align-items: center;
     grid-auto-flow: column;
-    position: relative;
+    position: absolute;
+    top: 1rem;
   }
 
   .active {
@@ -177,6 +179,12 @@ export default {
     border-radius: 5rem;
     z-index: 1;
     user-select: none;
+    cursor: pointer;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 1s;
+  }
+
+  .editContainer:hover {
+     background: rgba(0,0,0,1);
   }
   .editImg {
     width: 2rem;

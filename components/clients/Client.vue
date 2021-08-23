@@ -6,7 +6,6 @@
     <img src="@/assets/images/perfiles.jpg" />
     <div class="info">
       <div id="infoTable" class="boxInfo">
-        <p class="titleCards">Mesa:</p>
         <p>{{ info.tableName }}</p>
       </div>
       <div class="boxInfo">
@@ -68,6 +67,7 @@ export default {
   flex-direction: row;
   padding: 1rem 5rem 1rem 1rem;
   position: relative;
+  min-width: 25rem;
 }
 
 .clientReported {
@@ -82,6 +82,7 @@ export default {
   flex-direction: row;
   padding: 1rem 5rem 1rem 1rem;
     position: relative;
+      min-width: 25rem;
 }
 
 .clientReported #reports {

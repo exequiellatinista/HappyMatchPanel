@@ -7,7 +7,7 @@
       <p>Inicie sesión con su usuario y contraseña </p>
       <input type="text" data-value="false" name="email" autocomplete="off" required="" placeholder="Usuario"/>
       <input type="password" data-value="false" name="password" autocomplete="on" required="" placeholder="Password"/>
-      <div class="containerButton"><button class='buttonSubmit' type="submit">Acceder</button></div>
+      <nuxt-link :to="'/questions'" class="containerButton"><button class='buttonSubmit' type="submit">Acceder</button></nuxt-link>
       <div class="socialButtons">
       <SocialLoginButton type='Google' @click='loginWithGoogle' />
       <SocialLoginButton type='Facebook' />

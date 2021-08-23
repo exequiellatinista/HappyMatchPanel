@@ -10,7 +10,7 @@
     <div class='questions'>
       <div v-if="localSelected.lenght!=0" class="questionsSelected">
         <div v-for="(question, index) in localSelected.questions" :key="localSelected.localId + index" class="question">
-          <Question :info='{question, index}' />
+          <Question :info='{question, index}' @clickDeleteQuestion='deleteQuestion(question.id)'/>
         </div>
              <div class="newQuestion">  
         <AddButton type='normal' @click='addNewQuestion()'/>
@@ -19,11 +19,15 @@
     </div>
     <div class="users">
       <div class="filterContainer">
+        <div class="inputWrapper">
+            <img class="searchIcon" src="@/assets/icons/search.svg">
+            <img v-if="searchValue!=''" class="clearIcon" src="@/assets/icons/clearInput.svg" @click="searchValue='';searchFilter()">
         <form>
-          <input placeholder="Buscar..">
+          <input v-model="searchValue" placeholder="Buscar.." @keyup="searchFilter()" >
         </form>
+        </div>
       </div>
-      <div v-for="table in localSelected.tables" :key="localSelected.localId + table.id" class="user">
+      <div v-for="table in clientsSelected" :key="localSelected.localId + table.id" class="user">
         <Client :info="table"/>
       </div>
     </div>
@@ -47,6 +51,8 @@ export default {
   data: () => ({
     dataApi: {},
     localSelected: [],
+    searchValue:'',
+    clientsSelected: [],
     locals: [
       {
         clientId: '1234',
@@ -54,30 +60,17 @@ export default {
         name: 'Sable Santa Fe',
         questions: [
           {
+            id: '1',
             question: 'Te gusta el mc?',
             answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
           },
           {
+            id: '2',
             question: 'Te gusta el burguer?',
             answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
           },
           {
-            question: 'Te gusta el mostaza?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
-          },
-          {
-            question: 'Te gusta el mostaza?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
-          },
-          {
-            question: 'Te gusta el mostaza?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
-          },
-          {
-            question: 'Te gusta el mostaza?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
-          },
-          {
+            id: '3',
             question: 'Te gusta el mostaza?',
             answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
           },
@@ -109,7 +102,7 @@ export default {
               name: 'Sofia',
               banned: false,
             },
-           img: '@/assets/images/perfiles.jpg',
+            img: '@/assets/images/perfiles.jpg',
             tableName: 'Mesa 3',
             reports: 0,
           },
@@ -152,15 +145,38 @@ export default {
         name: 'Sable Callao',
         questions: [
           {
-            question: 'Te gusta capucchino',
+            id: '1',
+            question: 'Te gusta el mc?',
             answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
           },
           {
-            question: 'Te gustan las medialunas?',
+            id: '2',
+            question: 'Te gusta el burguer?',
             answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
           },
           {
-            question: 'Te gustan las tostadas?',
+            id: '3',
+            question: 'Te gusta el mostaza?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+          {
+            id: '4',
+            question: 'Te gusta el mostaza?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+          {
+            id: '5',
+            question: 'Te gusta el mostaza?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+          {
+            id: '6',
+            question: 'Te gusta el mostaza?',
+            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+          },
+          {
+            id: '7',
+            question: 'Te gusta el mostaza?',
             answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
           },
         ],
@@ -231,6 +247,7 @@ export default {
   }),
   async mounted() {
     this.localSelected = this.locals.find((l) => l)
+    this.clientsSelected = this.localSelected.tables
     const res = await fetch(
       'http://primeraprueba1.herokuapp.com/api/respuestas'
     )
@@ -246,6 +263,13 @@ export default {
         question: '',
         answers: [],
       })
+    },
+    deleteQuestion(questionDeleted) {
+      this.localSelected.questions = this.localSelected.questions.filter(q => q.id !== questionDeleted)
+      console.log(this.localSelected.questions)
+    },
+    searchFilter() {
+      this.clientsSelected = this.localSelected.tables.filter( t => t.tableName.toLowerCase().includes(this.searchValue.toLowerCase()))
     },
   },
 }
@@ -275,8 +299,8 @@ export default {
 }
 .questions {
   display: grid;
-     align-items: start;
-    justify-items: center;
+  align-items: start;
+  justify-items: center;
   width: 100%;
   box-sizing: border-box;
   border: solid 1px var(--border-color);
@@ -298,7 +322,7 @@ export default {
   min-height: 12rem;
   overflow: hidden;
   border: dashed rgba(0, 0, 0, 0.1) 2px;
-   box-sizing: border-box;
+  box-sizing: border-box;
 }
 .local {
   max-width: 100%;
@@ -313,7 +337,7 @@ export default {
   width: calc(100% - 2rem);
   grid-gap: 1.3rem;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-   box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .users {
@@ -325,13 +349,13 @@ export default {
   align-items: start;
   justify-items: center;
   gap: 1rem 0;
-  padding-top: 5rem;
+  padding-top: 8rem;
   position: relative;
 }
 .filterContainer {
   position: absolute;
-  top:0;
-  height: 2rem;
+  top: 0;
+  height: 4rem;
   width: 100%;
   background: #f3f3f4;
   display: flex;
@@ -340,17 +364,43 @@ export default {
 }
 .filterContainer form {
   width: 100%;
-    display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 .filterContainer input {
+  width: 100%;
+  border: none;
+  box-shadow: 0 8px 20px rgb(0 0 0 / 6%);
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 1.5rem 4rem;
+  outline: none;
+  height: 100%;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 1.4rem;
+  left: 1rem;
+  z-index: 1;
+}
+.clearIcon {
+  position: absolute;
+  top: 1.4rem;
+  left: calc(100% - 4rem);
+  z-index: 1;
+  cursor: pointer;
+}
+
+
+.inputWrapper {
+  width: 80%;
   position: relative;
   top: 1rem;
   height: 2rem;
-  width: 80%;
-  border: none;
-      box-shadow: 0 8px 20px rgb(0 0 0 / 6%);
-    border-radius: 8px;
+  border:none;
+   box-sizing: border-box;
 }
 </style>

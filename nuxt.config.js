@@ -97,9 +97,15 @@ export default {
       onAuthStateChangedAction: 'onAuthStateChangedAction',
       subscribeManually: false
     },
-    ssr: false, // default
     emulatorPort: 9099,
     emulatorHost: 'http://localhost',
+
+    ssr: {
+      ignorePaths: [
+        '/questions', // path is ignored if url.pathname.startsWith('/admin')
+        /^api/ // path is ignored if url.pathname without the leading slash (/) matches the RegExp
+      ]
+    }
   },
 
   storybook: {
