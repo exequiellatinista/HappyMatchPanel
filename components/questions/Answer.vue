@@ -1,7 +1,7 @@
 <template>
   <form  v-if="showAnswer" class="answerContainer">
-    <input class="answerInput" :value='answerprop' :placeholder='[answerprop=="" & "+"]'/>
-    <div class="deleteAnswer" @click='changeShowAnswer()'><img src="@/assets/icons/cancel.svg"/></div>
+    <input v-model="answerValue" class="answerInput" placeholder="Describa la respuesta"/>
+    <div v-if="answerprop.localAnswers.length > 2" class="deleteAnswer" @click="$emit('deleteAnswer')"><img src="@/assets/icons/cancel.svg"/></div>
   </form>
 </template>
 <script>
@@ -14,8 +14,12 @@ export default {
     }
   },
   data: () => ({
-    showAnswer: true
+    showAnswer: true,
+    answerValue: '',
   }),
+  mounted() {
+    this.answerValue = this.answerprop.answer.answer
+  },
   methods: {
     changeShowAnswer() {
       this.showAnswer =! this.showAnswer

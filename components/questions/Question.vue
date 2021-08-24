@@ -3,36 +3,36 @@
     <ConfirmModal v-if="showModal" @click='changeShowModal()' @clickDelete="changeShowModal(),$emit('clickDeleteQuestion')" />
     <div class="questionHeader">
       <div class="active">
-        <div class="activeColor"></div>
+        <div :class="activeColor"></div>
         <p class="activeText">Active</p>
       </div>
       <div class="editContainer" @click='changeShowModal()'>
         <img class="editImg" src="@/assets/icons/delete.svg"/>
       </div>
     </div>
-    <input class="questionName" :value="info.question.question"/>
+    <input v-model="questionTitle" class="questionName" placeholder="Describe la pregunta"/>
   <div class="answers">
-    <div v-for="answer in localAnswers" :key="answer.answer + info.question.question" class="answer">
-      <Answer :answerprop='answer.answer'/>
+    <div v-for="answer in localAnswers" :key="answer.answer" class="answer">
+      <Answer :answerprop='{answer, localAnswers}' @deleteAnswer="deleteAnswer(answer)"/>
     </div>
     <div class="footerQuestion">
-      <input placeholder="+">
+      <div><AddButton type='mini' @click='addNewAnswer()'/></div>
     </div>
   </div>
-  <!-- <AddButton type='mini' @click='addNewAnswer()'/> -->
+  
   </form>
 </template>
 
 <script>
 import ConfirmModal from '@/components/questions/tools/ConfirmModal.vue'
 import Answer from '@/components/questions/Answer.vue'
-// import AddButton from './tools/AddButton.vue'
+import AddButton from './tools/AddButton.vue'
 export default {
   name:'Question',
   components: {
     ConfirmModal,
     Answer,
-    // AddButton
+    AddButton
   },
   props: {
     info: {
@@ -45,6 +45,8 @@ export default {
     showModal: false,
     localAnswers: [],
     classColor: '',
+    questionTitle: '',
+    activeColor: 'notActiveColor',
     colorArray: [
       '#e1e7e9',
       '#dedde7',
@@ -55,7 +57,8 @@ export default {
   mounted() {
     this.localAnswers= this.info.question.answers
     this.classColor = this.colorArray[( (((this.info.index + 1) / 4) - Math.trunc((this.info.index + 1)/4)) * 4)]
-    console.log(( (((this.info.index + 1) / 4) - Math.trunc((this.info.index + 1)/4)) * 4))
+    this.activeColor = this.info.question.active? 'activeColor' : 'notActiveColor'
+    this.questionTitle = this.info.question.question
   },
   methods: {
     changeShowModal() {
@@ -65,8 +68,11 @@ export default {
       this.classContainer = "deletedQuestion"
     },
     addNewAnswer(){
-     this.localAnswers.push({answer:''})
-    }
+     this.localAnswers.push({id: Math.random(),answer:''})
+    },
+    deleteAnswer(answer){
+        this.localAnswers = this.localAnswers.filter(a => a.id !== answer.id)
+    },
   }
 }
 </script>
@@ -156,10 +162,17 @@ export default {
     width: 50%;
     margin-bottom: 1rem;
   }
-  .activeColor {
+  .notActiveColor {
   width: 1rem;
     height:1rem;
     background: black;
+    border-radius: 1rem;
+  }
+
+  .activeColor {
+      width: 1rem;
+    height:1rem;
+    background: green;
     border-radius: 1rem;
   }
   .activeText {
@@ -193,11 +206,14 @@ export default {
   .footerQuestion {
   width: 100%;
   }
-  .footerQuestion input {
+  .footerQuestion div {
       border: dashed rgba(0,0,0,0.1) 1px;
       background: rgba(256,256,256,0.1);;
       width:100%;
       font-size: 1.5rem;
       text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
   }
 </style>

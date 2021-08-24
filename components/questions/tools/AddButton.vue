@@ -1,5 +1,5 @@
 <template>
-  <button :class='type' @click="$emit('click')">
+  <button :class='type' @click.prevent="$emit('click')">
     <p>+</p>
   </button>
 </template>
@@ -21,15 +21,15 @@ export default {
     justify-content: center;
     border: none;
     user-select: none;
+    cursor: pointer;
   }
 
   .mini {
     width: 5rem;
     height: 2rem;
-    background: #5298f1;
-    font-size: 1rem;
-    color:black;
-    border-radius: 1rem;
+    background: transparent;
+    font-size: 2rem;
+    color:gray;
   }
 
   .normal {

@@ -60,6 +60,7 @@ footer {
   border-radius: 1rem;
   background: rgba(255, 0, 50, 0.8);
   box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.2);
+   z-index: 99;
 }
 
 .icons {

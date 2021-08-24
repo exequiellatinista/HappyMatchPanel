@@ -1,6 +1,6 @@
 <template lang="">
   <div class="indexQuestionContainer">
-    <div class='owner'>Administre las preguntas y respuestas que se veran en sus locales<br> Las preguntas tildadas como Active, son las que se muestran en el dia actual.</div>
+    <div class='owner'>Administre las preguntas y respuestas que se veran en sus locales<br> Las preguntas tildadas como Active, son las que se estan mostrando en el dia de hoy.</div>
     <div class='locals'>
       <div v-for="local in locals" :key="local.localId" class='local'>
         <Locals :localprop='{local, localSelected}' @click="setLocalSelected(local)"/>
@@ -8,16 +8,18 @@
     </div>
     <div class="localContainer">
     <div class='questions'>
-      <div v-if="localSelected.lenght!=0" class="questionsSelected">
+      <p class="titleBoxs">Preguntas y respuestas</p>
+      <div v-if="localSelected.length!==0" class="questionsSelected">
         <div v-for="(question, index) in localSelected.questions" :key="localSelected.localId + index" class="question">
           <Question :info='{question, index}' @clickDeleteQuestion='deleteQuestion(question.id)'/>
         </div>
              <div class="newQuestion">  
-        <AddButton type='normal' @click='addNewQuestion()'/>
+        <AddButton type='normal' @click='searchEmptyQuestion()'/>
       </div>
       </div>
     </div>
     <div class="users">
+    <p class="titleBoxs">Mesas actuales</p>
       <div class="filterContainer">
         <div class="inputWrapper">
             <img class="searchIcon" src="@/assets/icons/search.svg">
@@ -51,28 +53,51 @@ export default {
   data: () => ({
     dataApi: {},
     localSelected: [],
-    searchValue:'',
+    searchValue: '',
     clientsSelected: [],
+    emptyQuestions: [],
     locals: [
       {
         clientId: '1234',
         localId: '0',
-        name: 'Sable Santa Fe',
+        name: 'Peñon del Aguila',
         questions: [
           {
-            id: '1',
-            question: 'Te gusta el mc?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: 1,
+            question: 'Birra..¿Ipa o Honey?',
+            active: true,
+            answers: [
+              { id: 1, answer: 'Ipa' },
+              { id: 2, answer: 'Honey' },
+            ],
           },
           {
-            id: '2',
-            question: 'Te gusta el burguer?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: 2,
+            active: true,
+            question: '¿Fernet o Gin?',
+            answers: [
+              { id: 1, answer: 'Fernet' },
+              { id: 2, answer: 'Gin' },
+            ],
           },
           {
-            id: '3',
-            question: 'Te gusta el mostaza?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: 3,
+            question: 'Ciudad dividida..¿Central o NOB?',
+            active: false,
+            answers: [
+              { id: 1, answer: 'Central' },
+              { id: 2, answer: 'NOB' },
+              { id: 3, answer: 'Ninguno' },
+            ],
+          },
+          {
+            id: 4,
+            question: '¿Team invierno o team verano?',
+            active: true,
+            answers: [
+              { id: 1, answer: 'Invierno' },
+              { id: 2, answer: 'Verano' },
+            ],
           },
         ],
         tables: [
@@ -141,43 +166,72 @@ export default {
 
       {
         clientId: '566565',
-        localId: '1',
+        localId: 1,
         name: 'Sable Callao',
         questions: [
           {
-            id: '1',
-            question: 'Te gusta el mc?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: 1,
+            question: 'Birra..¿Ipa o Honey?',
+            active: true,
+            answers: [
+              { id: 1, answer: 'Ipa' },
+              { id: 2, answer: 'Honey' },
+            ],
           },
           {
-            id: '2',
-            question: 'Te gusta el burguer?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: 2,
+            active: true,
+            question: '¿Fernet o Gin?',
+            answers: [
+              { id: 1, answer: 'Fernet' },
+              { id: 2, answer: 'Gin' },
+            ],
           },
           {
-            id: '3',
-            question: 'Te gusta el mostaza?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: 3,
+            question: 'Ciudad dividida..¿Central o NOB?',
+            active: false,
+            answers: [
+              { id: 1, answer: 'Central' },
+              { id: 2, answer: 'NOB' },
+              { id: 3, answer: 'Ninguno' },
+            ],
           },
           {
-            id: '4',
-            question: 'Te gusta el mostaza?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: 4,
+            question: '¿Team invierno o team verano?',
+            active: true,
+            answers: [
+              { id: 1, answer: 'Invierno' },
+              { id: 2, answer: 'Verano' },
+            ],
           },
           {
-            id: '5',
-            question: 'Te gusta el mostaza?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: 5,
+            question: '¿Pregunta?',
+            active: false,
+            answers: [
+              { id: 1, answer: 'Respuesta1' },
+              { id: 2, answer: 'Respuesta2' },
+            ],
           },
           {
-            id: '6',
-            question: 'Te gusta el mostaza?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: 6,
+            question: '¿Pregunta?',
+            active: false,
+            answers: [
+              { id: 1, answer: 'Respuesta1' },
+              { id: 2, answer: 'Respuesta2' },
+            ],
           },
           {
-            id: '7',
-            question: 'Te gusta el mostaza?',
-            answers: [{ answer: 'Si' }, { answer: 'No' }, { answer: 'Nose' }],
+            id: 7,
+            question: '¿Pregunta?',
+            active: false,
+            answers: [
+              { id: 1, answer: 'Respuesta1' },
+              { id: 2, answer: 'Respuesta2' },
+            ],
           },
         ],
         tables: [
@@ -260,16 +314,27 @@ export default {
     },
     addNewQuestion() {
       this.localSelected.questions.push({
+        id: Math.random(),
         question: '',
-        answers: [],
+        answers: [{ answer: '' }, { answer: '' }],
       })
     },
     deleteQuestion(questionDeleted) {
-      this.localSelected.questions = this.localSelected.questions.filter(q => q.id !== questionDeleted)
-      console.log(this.localSelected.questions)
+      this.localSelected.questions = this.localSelected.questions.filter(
+        (q) => q.id !== questionDeleted
+      )
     },
     searchFilter() {
-      this.clientsSelected = this.localSelected.tables.filter( t => t.tableName.toLowerCase().includes(this.searchValue.toLowerCase()))
+      this.clientsSelected = this.localSelected.tables.filter((t) =>
+        t.tableName.toLowerCase().includes(this.searchValue.toLowerCase())
+      )
+    },
+
+    searchEmptyQuestion() {
+      this.emptyQuestions = this.localSelected.questions.filter(
+        (q) => q.question === ''
+      )
+    this.emptyQuestions.length === 0? this.addNewQuestion() :  this.addNewQuestion()
     },
   },
 }
@@ -287,6 +352,7 @@ export default {
   gap: 0 0.5rem;
   border-bottom: solid 1px var(--border-color);
   user-select: none;
+  margin-bottom: 3rem;
 }
 .localContainer {
   width: 100%;
@@ -304,6 +370,7 @@ export default {
   width: 100%;
   box-sizing: border-box;
   border: solid 1px var(--border-color);
+  position: relative;
 }
 .owner {
   font-size: 1rem;
@@ -394,13 +461,21 @@ export default {
   cursor: pointer;
 }
 
-
 .inputWrapper {
   width: 80%;
   position: relative;
   top: 1rem;
   height: 2rem;
-  border:none;
-   box-sizing: border-box;
+  border: none;
+  box-sizing: border-box;
+}
+
+.titleBoxs {
+  position: absolute;
+  top: -2rem;
+  left: 1rem;
+  font-size: 14px;
+  font-weight: 500;
+  color: #5f6368;
 }
 </style>
