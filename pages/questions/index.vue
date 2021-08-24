@@ -10,7 +10,7 @@
     <div class='questions'>
       <p class="titleBoxs">Preguntas y respuestas</p>
       <div v-if="localSelected.length!==0" class="questionsSelected">
-        <div v-for="(question, index) in localSelected.questions" :key="localSelected.localId + index" class="question">
+        <div v-for="(question, index) in localSelected.questions" :key="question.id" class="question">
           <Question :info='{question, index}' @clickDeleteQuestion='deleteQuestion(question.id)'/>
         </div>
              <div class="newQuestion">  
@@ -308,13 +308,17 @@ export default {
     const data = await res.json()
     this.dataApi = data
   },
+
+  updated() {
+    console.log(this.localSelected.questions)
+  },
   methods: {
     setLocalSelected(local) {
       this.localSelected = this.locals.find((l) => l.localId === local.localId)
     },
     addNewQuestion() {
       this.localSelected.questions.push({
-        id: Math.random(),
+        id: Date.now(),
         question: '',
         answers: [{ answer: '' }, { answer: '' }],
       })
@@ -323,6 +327,7 @@ export default {
       this.localSelected.questions = this.localSelected.questions.filter(
         (q) => q.id !== questionDeleted
       )
+      console.log(this.localSelected.questions)
     },
     searchFilter() {
       this.clientsSelected = this.localSelected.tables.filter((t) =>
@@ -399,7 +404,7 @@ export default {
 }
 
 .questionsSelected {
-  padding: 1rem;
+  padding: 2rem 1rem;
   display: grid;
   width: calc(100% - 2rem);
   grid-gap: 1.3rem;

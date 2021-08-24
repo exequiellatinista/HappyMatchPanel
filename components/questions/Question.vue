@@ -68,7 +68,7 @@ export default {
       this.classContainer = "deletedQuestion"
     },
     addNewAnswer(){
-     this.localAnswers.push({id: Math.random(),answer:''})
+     this.localAnswers.push({id: Date.now(),answer:''})
     },
     deleteAnswer(answer){
         this.localAnswers = this.localAnswers.filter(a => a.id !== answer.id)

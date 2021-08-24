@@ -9,7 +9,7 @@ export default {
   name: 'Answer',
   props: {
     answerprop: {
-      type: String,
+      type: Object,
       required: true
     }
   },
@@ -56,7 +56,7 @@ export default {
     border-radius: 0.2rem;
     width: 100%;
     height: 100%;
-    padding: 0 1rem 0 0;
+    padding: 0 0.5rem;
     box-sizing: border-box;
         background: rgba(256,256,256,0.7);
   }

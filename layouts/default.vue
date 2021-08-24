@@ -8,17 +8,17 @@
         </section>
       </v-container>
     </v-main>
-    <BaseFooter />
+    <!-- <BaseFooter /> -->
   </div>
 </template>
 
 <script>
 import BaseHeader from '@/components/ui/BaseHeader.vue'
-import BaseFooter from '@/components/ui/BaseFooter.vue'
+// import BaseFooter from '@/components/ui/BaseFooter.vue'
 export default {
   components: {
     BaseHeader,
-    BaseFooter,
+    // BaseFooter,
   },
 }
 </script>
