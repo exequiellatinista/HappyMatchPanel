@@ -20,6 +20,7 @@ export default {
     BaseHeader,
     // BaseFooter,
   },
+  middleware: 'auth',
 }
 </script>
 

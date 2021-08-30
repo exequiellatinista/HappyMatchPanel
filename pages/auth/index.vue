@@ -23,11 +23,10 @@
           required=""
           placeholder="Password"
         />
-        <nuxt-link :to="'/questions'" class="containerButton"
+        <div class="containerButton"
           ><button class="buttonSubmit" type="submit" @click.prevent="loginWithUserName()">
             Acceder
-          </button></nuxt-link
-        >
+          </button></div>
         <div class="socialButtons">
           <SocialLoginButton type="Google" @click="loginWithGoogle" />
           <SocialLoginButton type="Facebook" />
@@ -49,6 +48,8 @@ export default {
     ColorSwitch,
     SocialLoginButton,
   },
+  
+  middleware: 'auth',
   layout: 'auth',
   data: () => ({
     isRegisterMode: false,
@@ -78,15 +79,15 @@ export default {
     async loginWithUserName() {
       try {
         const post = {
-          body: {
+          
             "username": this.userName,
             "password": this.userPassword,
-          },
+        
         }
         await this.$axios
-          .$post('https://happymatch-backend.herokuapp.com/api/clients/loginClient', post)
+          .$post('/server-middleware/getJSON', post)
           .then((result) => {
-            console.log(result)
+            this.$router.push('questions')
           })
       } catch (error) {
         console.error('Login error', error)
