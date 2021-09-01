@@ -1,4 +1,6 @@
 export default {
+
+  target: 'server',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - HappyMatchPanel',
@@ -100,15 +102,15 @@ export default {
     emulatorPort: 9099,
     emulatorHost: 'http://localhost',
 
-    ssr: {
-      ignorePaths: [
-        '/questions', // path is ignored if url.pathname.startsWith('/admin')
-        /^api/ // path is ignored if url.pathname without the leading slash (/) matches the RegExp
-      ]
-    }
+    // ssr: {
+    //   ignorePaths: [
+    //     '/questions', // path is ignored if url.pathname.startsWith('/admin')
+    //     /^api/ // path is ignored if url.pathname without the leading slash (/) matches the RegExp
+    //   ]
+    // }
   },
   serverMiddleware: {
-    '/api': '~/api/index.js'
+    '/api': '~/api'
   },
 
   storybook: {
