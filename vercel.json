@@ -5,7 +5,7 @@
       "src": "nuxt.config.js",
       "use": "@nuxtjs/vercel-builder",
       "config": {
-        "serverFiles": ["logger"] // HERE ADD THE PATH TO YOUR SERVER FILES
+        "serverFiles": ["logger"] 
       }
     }
   ]
