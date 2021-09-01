@@ -51,6 +51,6 @@ app.post('/', (req, res) => {
 })
 
 module.exports = {
-  path: "/logger",
+  path: "/api/logger",
   handler: app
 }

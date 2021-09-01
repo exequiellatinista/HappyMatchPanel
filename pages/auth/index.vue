@@ -83,7 +83,7 @@ export default {
         
         }
         await this.$axios
-          .$post('/logger', post)
+          .$post('/api/logger', post)
           .then((result) => {
             this.$router.push('questions')
           })
