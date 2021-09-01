@@ -108,7 +108,7 @@ export default {
     }
   },
   serverMiddleware: {
-    '/api': '~/api'
+    '/api': '~/api/index.js'
   },
 
   storybook: {
