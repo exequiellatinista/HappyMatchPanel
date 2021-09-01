@@ -107,9 +107,9 @@ export default {
       ]
     }
   },
-  serverMiddleware: [
-    '~/api/index.js'
-  ],
+  serverMiddleware: {
+    '/api': '~/api'
+  },
 
   storybook: {
     stories: [
