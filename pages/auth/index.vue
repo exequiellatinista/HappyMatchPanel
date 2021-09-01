@@ -48,8 +48,6 @@ export default {
     ColorSwitch,
     SocialLoginButton,
   },
-  
-  middleware: 'auth',
   layout: 'auth',
   data: () => ({
     isRegisterMode: false,
