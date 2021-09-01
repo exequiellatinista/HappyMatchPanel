@@ -67,7 +67,7 @@ export default {
         this.setUser(user)
       } catch (error) {
         // TODO: show toast
-        console.error('Login error')
+        console.error('Login error', error)
       }
     },
     changeRegisterMode() {
