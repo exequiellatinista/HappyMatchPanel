@@ -50,7 +50,10 @@ app.post('/', (req, res) => {
 
 })
 
-module.exports = app
+module.exports = {
+  path: "/api",
+  handler: app
+}
 
 // Start standalone server if directly running
 if (require.main === module) {

@@ -48,6 +48,8 @@ export default {
     '@nuxtjs/svg',
     // https://firebase.nuxtjs.org/
     '@nuxtjs/firebase',
+       // Doc: https://http.nuxtjs.org
+       '@nuxt/http'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
