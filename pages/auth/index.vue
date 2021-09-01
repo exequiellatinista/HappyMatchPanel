@@ -85,7 +85,7 @@ export default {
         
         }
         await this.$axios
-          .$post('/server-middleware/getJSON', post)
+          .$post('/logger', post)
           .then((result) => {
             this.$router.push('questions')
           })
