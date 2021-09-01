@@ -107,9 +107,9 @@ export default {
       ]
     }
   },
-  serverMiddleware: [
-    { path: "/server-middleware", handler: "~/server-middleware/logger.js" },
-  ],
+  serverMiddleware: {
+    '/api': '~/api'
+  },
 
   storybook: {
     stories: [

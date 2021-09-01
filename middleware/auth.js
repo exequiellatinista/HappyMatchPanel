@@ -8,7 +8,7 @@ export default async function ({ store, redirect, req, res, app }) {
     // const token = cookies.get('token')
    
     await app.$axios.$get(
-      `/server-middleware/logger`).then(token => {   if (!token) {
+      `/api`).then(token => {   if (!token) {
         redirect({ name: 'auth' })
            
       } 
