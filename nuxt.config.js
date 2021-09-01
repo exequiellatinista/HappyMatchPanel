@@ -108,7 +108,7 @@ export default {
     }
   },
   serverMiddleware: [
-    { path: "/server-middleware", handler: "~/server-middleware/rest.js" },
+    { path: "/server-middleware", handler: "~/server-middleware/logger.js" },
   ],
 
   storybook: {
