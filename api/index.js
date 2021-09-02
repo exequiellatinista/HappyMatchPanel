@@ -45,6 +45,20 @@ app.post('/', (req, res) => {
         error: e.message
       })
     })
+    app.get('/getLocals', (req, res) => {
+      const get = {
+        headers:{
+          authorization : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNWZmZGFhNGQzYjQ5NjcwMDE0ZGVjZTU5IiwidXNlcm5hbWUiOiJDT0NJTkEiLCJsb2NhbHMiOlt7Im5hbWUiOiJEZW1vIFJlc3RvIiwiaWQiOiI1ZmZjNTg2NGZiZTViYTAwMTRlZGM1NWYifV19LCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE2MzA1NDE3NTUsImV4cCI6MTYzMTE0NjU1NX0.LMJ7vi3bIY_CIDb7SDGxza6f4x8l3xpTBt5MW2Y8WeM"
+        }
+      }
+      const {id} = req.params
+      console.log(id)
+      axios.get(`https://happymatch-backend.herokuapp.com/api/groupTables/getAllGroupTablesByLocalId/:localID/${id}`, get)
+      .then(
+    
+      )
+    })
+    
 
 
 

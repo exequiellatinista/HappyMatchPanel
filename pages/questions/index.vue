@@ -2,7 +2,7 @@
   <div class="indexQuestionContainer">
     <div class='owner'>Administre las preguntas y respuestas que se veran en sus locales<br> Las preguntas tildadas como Active, son las que se estan mostrando en el dia de hoy.</div>
     <div class='locals'>
-      <div v-for="local in locals" :key="local.localId" class='local'>
+      <div v-for="local in localsState" :key="local.localId" class='local'>
         <Locals :localprop='{local, localSelected}' @click="setLocalSelected(local)"/>
       </div>
     </div>
@@ -299,6 +299,9 @@ export default {
       },
     ],
   }),
+  computed: {
+   
+  },
   async mounted() {
     this.localSelected = this.locals.find((l) => l)
     this.clientsSelected = this.localSelected.tables
@@ -307,11 +310,9 @@ export default {
     )
     const data = await res.json()
     this.dataApi = data
+    this.localsState()
   },
 
-  updated() {
-    console.log(this.localSelected.questions)
-  },
   methods: {
     setLocalSelected(local) {
       this.localSelected = this.locals.find((l) => l.localId === local.localId)
@@ -335,11 +336,17 @@ export default {
       )
     },
 
+     localsState() {
+      return this.$axios.$get('/getLocals').then(response => console.log('mensaje local state ',response))
+    },
+
     searchEmptyQuestion() {
       this.emptyQuestions = this.localSelected.questions.filter(
         (q) => q.question === ''
       )
-    this.emptyQuestions.length === 0? this.addNewQuestion() :  this.addNewQuestion()
+      this.emptyQuestions.length === 0
+        ? this.addNewQuestion()
+        : this.addNewQuestion()
     },
   },
 }

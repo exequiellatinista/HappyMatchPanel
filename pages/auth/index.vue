@@ -57,12 +57,12 @@ export default {
   methods: {
     ...mapMutations({
       setUser: 'authentication/setUser',
+      setClient: 'data/setClient',
     }),
     async loginWithGoogle() {
       try {
         const provider = new this.$fireModule.auth.GoogleAuthProvider()
         const result = await this.$fire.auth.signInWithPopup(provider)
-        console.log(result)
         const user = result.user
         this.setUser(user)
       } catch (error) {
@@ -85,8 +85,11 @@ export default {
         await this.$axios
           .$post('/api', post)
           .then((result) => {
+            const {id, locals } = result.data
+             this.setClient({id, locals})
             this.$router.push('questions')
           })
+          
       } catch (error) {
         console.error('Login error', error)
       }
