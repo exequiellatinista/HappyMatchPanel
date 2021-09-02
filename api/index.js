@@ -4,15 +4,24 @@ const axios = require('axios')
 const app = express()
 
 
+const getToken = (req,res) => {
+  const cookies = new Cookies(req, res)
+  const token = cookies.get('token')
+  return token
+}
 
+const getUser = (req,res) => {
+  const cookies = new Cookies(req, res)
+  const user = cookies.get('user')
+  return user
+}
 
 app.use(express.json())
 app.get('/', (req, res) => {
-  const cookies = new Cookies(req, res)
-  const token = cookies.get('token')
+ 
 
   res.statusCode = 200
-  res.json(token)
+  res.json(getToken(req,res))
 })
 app.post('/', (req, res) => {
 
@@ -23,12 +32,18 @@ app.post('/', (req, res) => {
 
    axios.post('https://happymatch-backend.herokuapp.com/api/clients/loginClient', post)
     .then(response => {
-      const { token } = response.data.data
+      const { token, id, username, locals } = response.data.data
       const cookies = new Cookies(req, res)
-
+      const user = {id, username, locals}
+      console.log(user)
       if (token) {
     
         cookies.set('token', 'Bearer ' + token, {
+          maxAge: 3600000 * 12,
+          httpOnly: true // true by default
+        })
+
+        cookies.set('user', locals, {
           maxAge: 3600000 * 12,
           httpOnly: true // true by default
         })
@@ -45,35 +60,33 @@ app.post('/', (req, res) => {
         error: e.message
       })
     })
-    app.get('/getLocals', (req, res) => {
-      const get = {
-        headers:{
-          authorization : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNWZmZGFhNGQzYjQ5NjcwMDE0ZGVjZTU5IiwidXNlcm5hbWUiOiJDT0NJTkEiLCJsb2NhbHMiOlt7Im5hbWUiOiJEZW1vIFJlc3RvIiwiaWQiOiI1ZmZjNTg2NGZiZTViYTAwMTRlZGM1NWYifV19LCJ0eXBlIjoiYWRtaW4iLCJpYXQiOjE2MzA1NDE3NTUsImV4cCI6MTYzMTE0NjU1NX0.LMJ7vi3bIY_CIDb7SDGxza6f4x8l3xpTBt5MW2Y8WeM"
-        }
-      }
-      const {id} = req.params
-      console.log(id)
-      axios.get(`https://happymatch-backend.herokuapp.com/api/groupTables/getAllGroupTablesByLocalId/:localID/${id}`, get)
-      .then(
-    
-      )
-    })
-    
-
-
-
 })
+ app.get('/getLocals',async (req, res) => {
+  const token = await getToken(req,res)
+  const user = await getUser(req,res)
+
+  const get = {
+    headers:{
+      authorization : token
+    }
+  }
+  
+  console.log(toString(user))
+  await axios.get(`https://happymatch-backend.herokuapp.com/api/groupTables/getAllGroupTablesByLocalId/${user}`, get)
+  .then(
+    response => res.json({response})
+  )
+  .catch(e => {
+    res.statusCode = 403
+    res.json({
+      error: e.message
+    })
+  })
+})
+
 
 module.exports = {
   path: "/api",
   handler: app
 }
 
-// Start standalone server if directly running
-if (require.main === module) {
-  const port = process.env.PORT || 3001
-  app.listen(port, () => {
-    // eslint-disable-next-line no-console
-    console.log(`API server listening on port ${port}`)
-  })
-}

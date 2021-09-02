@@ -302,14 +302,9 @@ export default {
   computed: {
    
   },
-  async mounted() {
+   mounted() {
     this.localSelected = this.locals.find((l) => l)
     this.clientsSelected = this.localSelected.tables
-    const res = await fetch(
-      'http://primeraprueba1.herokuapp.com/api/respuestas'
-    )
-    const data = await res.json()
-    this.dataApi = data
     this.localsState()
   },
 
@@ -337,7 +332,7 @@ export default {
     },
 
      localsState() {
-      return this.$axios.$get('/getLocals').then(response => console.log('mensaje local state ',response))
+      return this.$axios.$get(`/api/getLocals`).then(response => console.log('mensaje local state ',response))
     },
 
     searchEmptyQuestion() {
