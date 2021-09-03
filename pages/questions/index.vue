@@ -328,27 +328,24 @@ export default {
       )
     },
 
-
     getLocals() {
-    
       return this.$axios
-        .$get(`/api/getLocals`)
+        .$get('/api/getUser')
         .then((response) => {
           console.log(response)
-          this.locals.tables = response.groupTables
+          this.locals = response.locals
+          this.locals.map(async l => (l.tables = await this.getGroupTables(l.id)))
+          console.log(this.locals)
         })
         .catch((e) => {
           console.log(e)
         })
     },
 
-    getGroupTables() {
-      const idSelected = ''
+    getGroupTables(localId) {
       return this.$axios
-        .$get(`/api/getGroupTables:${idSelected}`)
-        .then((response) => {
-          this.locals.tables = response.groupTables
-        })
+        .$get(`/api/getGroupTables/${localId}`)
+        .then((response) => response.groupTables)
         .catch((e) => {
           console.log(e)
         })
