@@ -2,7 +2,7 @@
   <div class="indexQuestionContainer">
     <div class='owner'>Administre las preguntas y respuestas que se veran en sus locales<br> Las preguntas tildadas como Active, son las que se estan mostrando en el dia de hoy.</div>
     <div class='locals'>
-      <div v-for="local in localsState" :key="local.localId" class='local'>
+      <div v-for="local in getLocals" :key="local.localId" class='local'>
         <Locals :localprop='{local, localSelected}' @click="setLocalSelected(local)"/>
       </div>
     </div>
@@ -299,13 +299,11 @@ export default {
       },
     ],
   }),
-  computed: {
-   
-  },
-   mounted() {
+  computed: {},
+  mounted() {
     this.localSelected = this.locals.find((l) => l)
     this.clientsSelected = this.localSelected.tables
-    this.localsState()
+    this.getLocals()
   },
 
   methods: {
@@ -330,22 +328,30 @@ export default {
       )
     },
 
-     localsState() {
-      return this.$axios.$get(`/api/getLocals`).then(response => {this.locals=response})
-       .catch(e => {
-   
-      console.log(e)
-    })
 
+    getLocals() {
+    
+      return this.$axios
+        .$get(`/api/getLocals`)
+        .then((response) => {
+          console.log(response)
+          this.locals.tables = response.groupTables
+        })
+        .catch((e) => {
+          console.log(e)
+        })
     },
 
-    getGroupTables(){
+    getGroupTables() {
       const idSelected = ''
-        return this.$axios.$get(`/api/getGroupTables:${idSelected}`).then(response => {this.locals.tables=response.groupTables})
-       .catch(e => {
-   
-      console.log(e)
-    })
+      return this.$axios
+        .$get(`/api/getGroupTables:${idSelected}`)
+        .then((response) => {
+          this.locals.tables = response.groupTables
+        })
+        .catch((e) => {
+          console.log(e)
+        })
     },
 
     searchEmptyQuestion() {

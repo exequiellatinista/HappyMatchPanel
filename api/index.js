@@ -63,7 +63,7 @@ app.post('/', (req, res) => {
 app.get('/getGroupTables:localId', (req, res) => {
   const token = getToken(req, res)
   const get = { headers: { Authorization: token } }
-  const user = getUser();
+  const user = getUser(req, res);
   console.log(user)
   console.log(token)
    axios.get('https://happymatch-backend.herokuapp.com/api/groupTables/getAllGroupTablesByLocalId/5ffc5864fbe5ba0014edc55f', get)
@@ -78,6 +78,12 @@ app.get('/getGroupTables:localId', (req, res) => {
         error: e.message
       })
     })
+})
+
+app.get('/getLocals', (req,res) => {
+  const user = getUser(req, res)
+  const locals = user.locals
+  return locals
 })
 
 
