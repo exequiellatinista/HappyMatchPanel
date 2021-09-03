@@ -323,7 +323,6 @@ export default {
       this.localSelected.questions = this.localSelected.questions.filter(
         (q) => q.id !== questionDeleted
       )
-      console.log(this.localSelected.questions)
     },
     searchFilter() {
       this.clientsSelected = this.localSelected.tables.filter((t) =>
@@ -332,7 +331,21 @@ export default {
     },
 
      localsState() {
-      return this.$axios.$get(`/api/getLocals`).then(response => console.log('mensaje local state ',response))
+      return this.$axios.$get(`/api/getLocals`).then(response => {this.locals=response})
+       .catch(e => {
+   
+      console.log(e)
+    })
+
+    },
+
+    getGroupTables(){
+      const idSelected = ''
+        return this.$axios.$get(`/api/getGroupTables:${idSelected}`).then(response => {this.locals.tables=response.groupTables})
+       .catch(e => {
+   
+      console.log(e)
+    })
     },
 
     searchEmptyQuestion() {

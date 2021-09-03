@@ -4,24 +4,24 @@ const axios = require('axios')
 const app = express()
 
 
-const getToken = (req,res) => {
+const getToken = (req, res) => {
   const cookies = new Cookies(req, res)
   const token = cookies.get('token')
   return token
 }
 
-const getUser = (req,res) => {
+const getUser = (req, res) => {
   const cookies = new Cookies(req, res)
-  const user = cookies.get('user')
+  const user = JSON.parse(cookies.get('user'))
   return user
 }
 
 app.use(express.json())
 app.get('/', (req, res) => {
- 
+
 
   res.statusCode = 200
-  res.json(getToken(req,res))
+  res.json(getToken(req, res))
 })
 app.post('/', (req, res) => {
 
@@ -30,24 +30,23 @@ app.post('/', (req, res) => {
     "password": req.body.password
   }
 
-   axios.post('https://happymatch-backend.herokuapp.com/api/clients/loginClient', post)
+  axios.post('https://happymatch-backend.herokuapp.com/api/clients/loginClient', post)
     .then(response => {
       const { token, id, username, locals } = response.data.data
       const cookies = new Cookies(req, res)
-      const user = {id, username, locals}
-      console.log(user)
       if (token) {
-    
+
         cookies.set('token', 'Bearer ' + token, {
           maxAge: 3600000 * 12,
-          httpOnly: true // true by default
+          httpOnly: true
         })
 
-        cookies.set('user', locals, {
+        cookies.set('user', JSON.stringify({id,username,locals}), {
           maxAge: 3600000 * 12,
-          httpOnly: true // true by default
+          httpOnly: true
         })
-   
+
+
         res.json({
           data: response.data.data
         })
@@ -61,27 +60,24 @@ app.post('/', (req, res) => {
       })
     })
 })
- app.get('/getLocals',async (req, res) => {
-  const token = await getToken(req,res)
-  const user = await getUser(req,res)
+app.get('/getGroupTables:localId', (req, res) => {
+  const token = getToken(req, res)
+  const get = { headers: { Authorization: token } }
+  const user = getUser();
+  console.log(user)
+  console.log(token)
+   axios.get('https://happymatch-backend.herokuapp.com/api/groupTables/getAllGroupTablesByLocalId/5ffc5864fbe5ba0014edc55f', get)
+    .then(
 
-  const get = {
-    headers:{
-      authorization : token
-    }
-  }
-  
-  console.log(toString(user))
-  await axios.get(`https://happymatch-backend.herokuapp.com/api/groupTables/getAllGroupTablesByLocalId/${user}`, get)
-  .then(
-    response => res.json({response})
-  )
-  .catch(e => {
-    res.statusCode = 403
-    res.json({
-      error: e.message
+      response => {
+        res.json( response.data )}
+    )
+    .catch(e => {
+      res.statusCode = 403
+      res.json({
+        error: e.message
+      })
     })
-  })
 })
 
 
