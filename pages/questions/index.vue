@@ -2,7 +2,7 @@
   <div class="indexQuestionContainer">
     <div class='owner'>Administre las preguntas y respuestas que se veran en sus locales<br> Las preguntas tildadas como Active, son las que se estan mostrando en el dia de hoy.</div>
     <div class='locals'>
-      <div v-for="local in getLocals" :key="local.localId" class='local'>
+      <div v-for="local in getLocals" :key="local.id" class='local'>
         <Locals :localprop='{local, localSelected}' @click="setLocalSelected(local)"/>
       </div>
     </div>
@@ -29,7 +29,7 @@
         </form>
         </div>
       </div>
-      <div v-for="table in clientsSelected" :key="localSelected.localId + table.id" class="user">
+      <div v-for="table in clientsSelected" :key="localSelected.id + table.id" class="user">
         <Client :info="table"/>
       </div>
     </div>
@@ -56,244 +56,19 @@ export default {
     searchValue: '',
     clientsSelected: [],
     emptyQuestions: [],
+    clientId: '1234',
     locals: [
       {
-        clientId: '1234',
-        localId: '0',
-        name: 'Peñon del Aguila',
-        questions: [
-          {
-            id: 1,
-            question: 'Birra..¿Ipa o Honey?',
-            active: true,
-            answers: [
-              { id: 1, answer: 'Ipa' },
-              { id: 2, answer: 'Honey' },
-            ],
-          },
-          {
-            id: 2,
-            active: true,
-            question: '¿Fernet o Gin?',
-            answers: [
-              { id: 1, answer: 'Fernet' },
-              { id: 2, answer: 'Gin' },
-            ],
-          },
-          {
-            id: 3,
-            question: 'Ciudad dividida..¿Central o NOB?',
-            active: false,
-            answers: [
-              { id: 1, answer: 'Central' },
-              { id: 2, answer: 'NOB' },
-              { id: 3, answer: 'Ninguno' },
-            ],
-          },
-          {
-            id: 4,
-            question: '¿Team invierno o team verano?',
-            active: true,
-            answers: [
-              { id: 1, answer: 'Invierno' },
-              { id: 2, answer: 'Verano' },
-            ],
-          },
-        ],
+        id: '',
+        name: '',
         tables: [
           {
-            id: '1',
-            mainUser: {
-              name: 'José',
-              banned: false,
-            },
-            img: '@/assets/images/perfiles.jpg',
-            tableName: 'Mesa 1',
-            reports: 0,
-          },
-          {
-            id: '2',
-            mainUser: {
-              name: 'Brian',
-              banned: false,
-            },
-            img: '@/assets/images/perfiles.jpg',
-            tableName: 'Mesa 2',
-            reports: 3,
-          },
-          {
-            id: '3',
-            mainUser: {
-              name: 'Sofia',
-              banned: false,
-            },
-            img: '@/assets/images/perfiles.jpg',
-            tableName: 'Mesa 3',
-            reports: 0,
-          },
-          {
-            id: '4',
-            mainUser: {
-              name: 'Emanuel',
-              banned: false,
-            },
-            img: '@/assets/images/perfiles.jpg',
-            tableName: 'Mesa 4',
-            reports: 0,
-          },
-          {
-            id: '5',
-            mainUser: {
-              name: 'Roberto',
-              banned: false,
-            },
-            img: '@/assets/images/perfiles.jpg',
-            tableName: 'Mesa 5',
-            reports: 0,
-          },
-          {
-            id: '6',
-            mainUser: {
-              name: 'Maria',
-              banned: false,
-            },
-            img: '@/assets/images/perfiles.jpg',
-            tableName: 'Mesa 6',
-            reports: 0,
-          },
-        ],
-      },
-
-      {
-        clientId: '566565',
-        localId: 1,
-        name: 'Sable Callao',
-        questions: [
-          {
-            id: 1,
-            question: 'Birra..¿Ipa o Honey?',
-            active: true,
-            answers: [
-              { id: 1, answer: 'Ipa' },
-              { id: 2, answer: 'Honey' },
-            ],
-          },
-          {
-            id: 2,
-            active: true,
-            question: '¿Fernet o Gin?',
-            answers: [
-              { id: 1, answer: 'Fernet' },
-              { id: 2, answer: 'Gin' },
-            ],
-          },
-          {
-            id: 3,
-            question: 'Ciudad dividida..¿Central o NOB?',
-            active: false,
-            answers: [
-              { id: 1, answer: 'Central' },
-              { id: 2, answer: 'NOB' },
-              { id: 3, answer: 'Ninguno' },
-            ],
-          },
-          {
-            id: 4,
-            question: '¿Team invierno o team verano?',
-            active: true,
-            answers: [
-              { id: 1, answer: 'Invierno' },
-              { id: 2, answer: 'Verano' },
-            ],
-          },
-          {
-            id: 5,
-            question: '¿Pregunta?',
-            active: false,
-            answers: [
-              { id: 1, answer: 'Respuesta1' },
-              { id: 2, answer: 'Respuesta2' },
-            ],
-          },
-          {
-            id: 6,
-            question: '¿Pregunta?',
-            active: false,
-            answers: [
-              { id: 1, answer: 'Respuesta1' },
-              { id: 2, answer: 'Respuesta2' },
-            ],
-          },
-          {
-            id: 7,
-            question: '¿Pregunta?',
-            active: false,
-            answers: [
-              { id: 1, answer: 'Respuesta1' },
-              { id: 2, answer: 'Respuesta2' },
-            ],
-          },
-        ],
-        tables: [
-          {
-            id: '1',
-            mainUser: {
-              name: 'Tiago',
-              banned: false,
-            },
-            img: '@/assets/images/perfiles.jpg',
-            tableName: 'Mesa 1',
-            reports: 0,
-          },
-          {
-            id: '2',
-            mainUser: {
-              name: 'Leandro',
-              banned: false,
-            },
-            img: '@/assets/images/perfiles.jpg',
-            tableName: 'Mesa 2',
-            reports: 3,
-          },
-          {
-            id: '3',
-            mainUser: {
-              name: 'Maria',
-              banned: false,
-            },
-            img: '@/assets/images/perfiles.jpg',
-            tableName: 'Mesa 3',
-            reports: 0,
-          },
-          {
-            id: '4',
-            mainUser: {
-              name: 'Carlos',
-              banned: false,
-            },
-            img: '@/assets/images/perfiles.jpg',
-            tableName: 'Mesa 4',
-            reports: 0,
-          },
-          {
-            id: '5',
-            mainUser: {
-              name: 'Luka',
-              banned: false,
-            },
-            img: '@/assets/images/perfiles.jpg',
-            tableName: 'Mesa 5',
-            reports: 0,
-          },
-          {
-            id: '6',
-            mainUser: {
-              name: 'John',
-              banned: false,
-            },
-            img: '@/assets/images/perfiles.jpg',
-            tableName: 'Mesa 6',
-            reports: 0,
+            tableid: '',
+            name: '',
+            userMainId: '',
+            userCount: '',
+            picture: '',
+            arrayResp: [],
           },
         ],
       },
@@ -308,7 +83,7 @@ export default {
 
   methods: {
     setLocalSelected(local) {
-      this.localSelected = this.locals.find((l) => l.localId === local.localId)
+      this.localSelected = this.locals.find((l) => l.id === local.id)
     },
     addNewQuestion() {
       this.localSelected.questions.push({
@@ -334,7 +109,12 @@ export default {
         .then((response) => {
           console.log(response)
           this.locals = response.locals
-          this.locals.map(async l => (l.tables = await this.getGroupTables(l.id)))
+          this.clientId = response.id
+          this.locals.map(
+            async (l) => 
+            (l.tables = await this.getGroupTables(l.id))
+            (l.questions = await this.getQuestions(l.id))
+          )
           console.log(this.locals)
         })
         .catch((e) => {
@@ -342,10 +122,19 @@ export default {
         })
     },
 
-    getGroupTables(localId) {
+    getGroupTables(id) {
       return this.$axios
-        .$get(`/api/getGroupTables/${localId}`)
+        .$get(`/api/getGroupTables/${id}`)
         .then((response) => response.groupTables)
+        .catch((e) => {
+          console.log(e)
+        })
+    },
+
+    getQuestions(id) {
+       return this.$axios
+        .$get(`/api/getQuestions/${id}`)
+        .then((response) => console.log(response))
         .catch((e) => {
           console.log(e)
         })

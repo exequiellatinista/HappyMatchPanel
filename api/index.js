@@ -83,6 +83,23 @@ app.get('/getUser', (req,res) => {
   res.json(user)
 })
 
+app.get('/getQuestions:localId', (req, res) => {
+  const {localId} = req.params
+  const token = getToken(req, res)
+  const get = { headers: { Authorization: token } }
+  axios.get(`https://happymatch-backend.herokuapp.com/api/questions/getQuestionsByLocalId/${localId}`, get)
+  .then(
+    response => {
+      res.json( response.data )}
+  )
+  .catch(e => {
+    res.statusCode = 403
+    res.json({
+      error: e.message
+    })
+  })
+})
+
 
 module.exports = {
   path: "/api",
