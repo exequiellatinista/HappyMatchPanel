@@ -20,11 +20,11 @@
     <img src="@/assets/images/perfiles.jpg" />
     <div class="info">
       <div id="infoTable" class="boxInfo">
-        <p>{{ info.tableName }}</p>
+        <p>{{ info.name }}</p>
       </div>
       <div class="boxInfo">
         <p class="titleCards">Usuario:</p>
-        <p>{{ info.mainUser.name }}</p>
+        <p>{{ info.userMainId }}</p>
       </div>
       <div id="reports" class="boxInfo">
         <p class="titleCards">Reportes:</p>

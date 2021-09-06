@@ -1,8 +1,10 @@
 <template lang="">
-  <div class="indexQuestionContainer">
+  <p v-if="$fetchState.pending">Fetching locals...</p>
+  <p v-else-if="$fetchState.error">An error occurred :(</p>
+  <div v-else class="indexQuestionContainer" @>
     <div class='owner'>Administre las preguntas y respuestas que se veran en sus locales<br> Las preguntas tildadas como Active, son las que se estan mostrando en el dia de hoy.</div>
     <div class='locals'>
-      <div v-for="local in getLocals" :key="local.id" class='local'>
+      <div v-for="local in locals" :key="local.id" class='local'>
         <Locals :localprop='{local, localSelected}' @click="setLocalSelected(local)"/>
       </div>
     </div>
@@ -10,7 +12,7 @@
     <div class='questions'>
       <p class="titleBoxs">Preguntas y respuestas</p>
       <div v-if="localSelected.length!==0" class="questionsSelected">
-        <div v-for="(question, index) in localSelected.questions" :key="question.id" class="question">
+        <div v-for="(question, index) in localSelected.questions" :key="localSelected.id + index" class="question">
           <Question :info='{question, index}' @clickDeleteQuestion='deleteQuestion(question.id)'/>
         </div>
              <div class="newQuestion">  
@@ -24,12 +26,12 @@
         <div class="inputWrapper">
             <img class="searchIcon" src="@/assets/icons/search.svg">
             <img v-if="searchValue!=''" class="clearIcon" src="@/assets/icons/clearInput.svg" @click="searchValue='';searchFilter()">
-        <form>
-          <input v-model="searchValue" placeholder="Buscar.." @keyup="searchFilter()" >
+        <form @submit.prevent>
+          <input v-model="searchValue" placeholder="Buscar.." @keyup="searchFilter()" @keyup.prevent="searchFilter()" >
         </form>
         </div>
       </div>
-      <div v-for="table in clientsSelected" :key="localSelected.id + table.id" class="user">
+      <div v-for="table in localSelected.tables" :key="localSelected.id + table.id" class="user">
         <Client :info="table"/>
       </div>
     </div>
@@ -54,32 +56,65 @@ export default {
     dataApi: {},
     localSelected: [],
     searchValue: '',
-    clientsSelected: [],
     emptyQuestions: [],
     clientId: '1234',
-    locals: [
-      {
-        id: '',
-        name: '',
-        tables: [
-          {
-            tableid: '',
-            name: '',
-            userMainId: '',
-            userCount: '',
-            picture: '',
-            arrayResp: [],
-          },
-        ],
-      },
-    ],
+    locals: []
+    // locals: [
+    //   {
+    //     id: '',
+    //     name: '',
+    //     tables: [
+    //       {
+    //         tableid: '',
+    //         name: '',
+    //         userMainId: '',
+    //         userCount: '',
+    //         picture: '',
+    //         arrayResp: [],
+    //       },
+    //     ],
+    //     questions: [
+    //       {
+    //         answers: ['azúl', 'verde', 'rojo'],
+    //         question: 'Color favorito',
+    //       },
+    //     ],
+    //   },
+    // ],
   }),
-  computed: {},
-  mounted() {
-    this.localSelected = this.locals.find((l) => l)
-    this.clientsSelected = this.localSelected.tables
-    this.getLocals()
-  },
+
+    async fetch() {
+       await this.$axios.$get(
+        '/api/getUser'
+      ).then((response) => {
+          this.locals = response.locals
+          this.clientId = response.id
+          console.log(this.locals)
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+  
+       this.locals.length>0&& await this.$axios.$get(`/api/getGroupTables/${this.locals[0].id}`).then((res) => {this.locals[0].tables=res.groupTables}).catch(e=>console.log(e))
+      this.locals.length>0&& await this.$axios.$get(`/api/getQuestions/${this.locals[0].id}`).then((res) => {this.locals[0].questions=res.questions}).catch(e=>console.log(e))
+      console.log('hora fetch',Date.now())
+      await this.setLocalSelected(this.locals[0])
+      console.log(this.locals[0])
+
+
+
+      
+    },
+      fetchOnServer: false,
+  //   updated() {
+
+  //      this.$nextTick(function () {
+  // console.log('hora mounted',Date.now())
+  //     this.locals.length>0&& this.setLocalSelected(this.local[0])
+  // })
+   
+      
+  //   },
 
   methods: {
     setLocalSelected(local) {
@@ -98,28 +133,27 @@ export default {
       )
     },
     searchFilter() {
-      this.clientsSelected = this.localSelected.tables.filter((t) =>
-        t.tableName.toLowerCase().includes(this.searchValue.toLowerCase())
+      this.localSelected.tables = this.localSelected.tables.filter((t) =>
+        t.name.toLowerCase().includes(this.searchValue.toLowerCase())
       )
     },
 
     getLocals() {
-      return this.$axios
+       this.$axios
         .$get('/api/getUser')
         .then((response) => {
-          console.log(response)
           this.locals = response.locals
           this.clientId = response.id
-          this.locals.map(
-            async (l) => 
-            (l.tables = await this.getGroupTables(l.id))
-            (l.questions = await this.getQuestions(l.id))
-          )
-          console.log(this.locals)
+          this.locals.map(async (l) => {
+            ;(l.tables = await this.getGroupTables(l.id))(
+              (l.questions = await this.getQuestions(l.id))
+            )
+          })
         })
         .catch((e) => {
           console.log(e)
         })
+         this.localSelected = this.locals.find((l) => l)
     },
 
     getGroupTables(id) {
@@ -132,9 +166,9 @@ export default {
     },
 
     getQuestions(id) {
-       return this.$axios
+      return this.$axios
         .$get(`/api/getQuestions/${id}`)
-        .then((response) => console.log(response))
+        .then((response) => response.questions)
         .catch((e) => {
           console.log(e)
         })

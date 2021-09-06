@@ -18,7 +18,7 @@ export default {
     answerValue: '',
   }),
   mounted() {
-    this.answerValue = this.answerprop.answer.answer
+    this.answerValue = this.answerprop.answer
   },
   methods: {
     changeShowAnswer() {
