@@ -75,16 +75,18 @@ export default {
     },
 
     async loginWithUserName() {
-      try {
-        const post = {
+       const post = {
           
             "username": this.userName,
             "password": this.userPassword,
         
         }
+      try {
+       
         await this.$axios
-          .$post('/api', post)
+          .$post(`/api/${ this.userName}/${ this.userPassword}`, post)
           .then((result) => {
+            console.log('resultado del post client', result)
             const {id, locals } = result.data
              this.setClient({id, locals})
             this.$router.push('questions')

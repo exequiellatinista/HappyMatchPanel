@@ -54,7 +54,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://happy-match-panel.vercel.app/', // Used as fallback if no runtime config is provided
+    baseURL: 'http://localhost:3000', // https://happy-match-panel.vercel.app
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
