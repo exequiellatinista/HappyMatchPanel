@@ -11,8 +11,8 @@
     <div class="localContainer">
     <div class='questions'>
       <p class="titleBoxs">Preguntas y respuestas</p>
-      <div v-if="localSelected.length!==0" class="questionsSelected">
-        <div v-for="(question, index) in localSelected.questions" :key="localSelected.id + index" class="question">
+      <div class="questionsSelected">
+        <div v-for="(question, index) in localSelected.questions" :key="question.question" class="question">
           <Question :info='{question, index}' @clickDeleteQuestion='deleteQuestion(question.id)'/>
         </div>
              <div class="newQuestion">  
@@ -58,7 +58,7 @@ export default {
     searchValue: '',
     emptyQuestions: [],
     clientId: '1234',
-    locals: []
+    locals: [],
     // locals: [
     //   {
     //     id: '',
@@ -83,48 +83,47 @@ export default {
     // ],
   }),
 
-    async fetch() {
-       await this.$axios.$get(
-        '/api/getUser'
-      ).then((response) => {
-          this.locals = response.locals
-          this.clientId = response.id
-          console.log(this.locals)
+  async fetch() {
+    await this.$axios
+      .$get('/api/getUser')
+      .then((response) => {
+        this.locals = response.locals
+        this.clientId = response.id
+        console.log(this.locals)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+
+    this.locals.length > 0 &&
+      (await this.$axios
+        .$get(`/api/getGroupTables/${this.locals[0].id}`)
+        .then((res) => {
+          this.locals[0].tables = res.groupTables
         })
-        .catch((e) => {
-          console.log(e)
+        .catch((e) => console.log(e)))
+    this.locals.length > 0 &&
+      (await this.$axios
+        .$get(`/api/getQuestions/${this.locals[0].id}`)
+        .then((res) => {
+          this.locals[0].questions = res.questions
         })
-  
-       this.locals.length>0&& await this.$axios.$get(`/api/getGroupTables/${this.locals[0].id}`).then((res) => {this.locals[0].tables=res.groupTables}).catch(e=>console.log(e))
-      this.locals.length>0&& await this.$axios.$get(`/api/getQuestions/${this.locals[0].id}`).then((res) => {this.locals[0].questions=res.questions}).catch(e=>console.log(e))
-      console.log('hora fetch',Date.now())
-      await this.setLocalSelected(this.locals[0])
-      console.log(this.locals[0])
-
-
-
-      
-    },
-      fetchOnServer: false,
-  //   updated() {
-
-  //      this.$nextTick(function () {
-  // console.log('hora mounted',Date.now())
-  //     this.locals.length>0&& this.setLocalSelected(this.local[0])
-  // })
-   
-      
-  //   },
+        .catch((e) => console.log(e)))
+    console.log('hora fetch', Date.now())
+    await this.setLocalSelected(this.locals[0])
+    console.log(this.locals[0])
+  },
 
   methods: {
     setLocalSelected(local) {
       this.localSelected = this.locals.find((l) => l.id === local.id)
     },
     addNewQuestion() {
+      console.log(this.localSelected.questions)
       this.localSelected.questions.push({
-        id: Date.now(),
+          answers: [{ answer: '' }, { answer: '' }],
         question: '',
-        answers: [{ answer: '' }, { answer: '' }],
+      
       })
     },
     deleteQuestion(questionDeleted) {
@@ -139,7 +138,7 @@ export default {
     },
 
     getLocals() {
-       this.$axios
+      this.$axios
         .$get('/api/getUser')
         .then((response) => {
           this.locals = response.locals
@@ -153,7 +152,7 @@ export default {
         .catch((e) => {
           console.log(e)
         })
-         this.localSelected = this.locals.find((l) => l)
+      this.localSelected = this.locals.find((l) => l)
     },
 
     getGroupTables(id) {
