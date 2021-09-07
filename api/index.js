@@ -1,6 +1,10 @@
 const axios = require('axios')
 const Cookies = require('cookies')
-const app = require('express')()
+// const app = require('express')()
+const express = require('express')
+const app = express()
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 module.exports = { path: '/api', handler: app }
 
 
@@ -23,13 +27,12 @@ app.get('/', (req, res) => {
   res.statusCode = 200
   res.json(getToken(req, res))
 })
-app.post('/:name/:pass', (req, res) => {
+app.post('/', (req, res) => {
 
-const {name, pass} = req.params
-console.log(name, pass, 'olo')
+  console.log(req.body)
   const post = {
-    "username": name,
-    "password":pass
+    "username": req.body.username,
+    "password":req.body.password
   }
 
   axios.post('https://happymatch-backend.herokuapp.com/api/clients/loginClient', post)
