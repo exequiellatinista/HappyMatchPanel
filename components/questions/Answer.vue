@@ -1,7 +1,7 @@
 <template>
   <form  v-if="showAnswer" class="answerContainer">
     <input v-model="answerValue" class="answerInput" placeholder="Describa la respuesta" @blur="$emit('update:answer', answerValue, answerprop.index)"/>
-    <div v-if="answerprop.localAnswers.length > 2" class="deleteAnswer" @click="$emit('deleteAnswer')"><img src="@/assets/icons/cancel.svg"/></div>
+    <div v-if="answerprop.localAnswers.length > 2" class="deleteAnswer" @click="$emit('delete:answer', answerprop.index)"><img src="@/assets/icons/cancel.svg"/></div>
   </form>
 </template>
 <script>

@@ -3,7 +3,7 @@
     <ConfirmModal
       v-if="showModal"
       @click="changeShowModal()"
-      @clickDelete="changeShowModal(), $emit('clickDeleteQuestion')"
+      @clickDelete="changeShowModal(), $emit('delete:question',info.index)"
     />
     <div class="questionHeader">
       <div class="active">
@@ -26,6 +26,7 @@
           :answerprop="{ answer, localAnswers, index }"
           @deleteAnswer="deleteAnswer(answer)"
           @update:answer="updateQuestion"
+          @delete:answer="deleteAnswer"
         />
       </div>
       <div class="footerQuestion">
@@ -85,10 +86,13 @@ export default {
       this.classContainer = 'deletedQuestion'
     },
     addNewAnswer() {
+      const emptyAnswers = this.localAnswers.filter(l => l === '')
+      emptyAnswers.length === 0&& 
       this.localAnswers.push('')
     },
-    deleteAnswer(answer) {
-      this.localAnswers = this.localAnswers.filter((a) => a.id !== answer.id)
+    deleteAnswer(index) {
+      this.localAnswers = this.localAnswers.filter((a) => a !== this.localAnswers[index])
+       this.$emit('update:question', this.questionTitle, this.info.index, this.localAnswers)
     },
     updateQuestion(answerL, index){
       answerL &&  (this.localAnswers[index] = answerL)

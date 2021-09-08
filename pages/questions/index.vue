@@ -13,7 +13,7 @@
       <p class="titleBoxs">Preguntas y respuestas</p>
       <div class="questionsSelected">
         <div v-for="(question, index) in questionsSelected" :key="question.question" class="question">
-          <Question :info='{question, index}' @clickDeleteQuestion='deleteQuestion(question.id)' @update:question='updateLocalQuestion'/>
+          <Question :info='{question, index}' @delete:question='deleteQuestion' @update:question='updateLocalQuestion'/>
         </div>
              <div class="newQuestion">  
         <AddButton type='normal' @click='searchEmptyQuestion()'/>
@@ -130,9 +130,9 @@ export default {
         console.log(this.localSelected.questions)
     },
 
-    confirmAddNewQuestion(){
+    confirmChangeQuestion(){
       const localId =  this.localSelected.id
-      const questions = this.localSelected.questions
+      const questions = this.questionsSelected
       const body = {localId, questions}
      
       this.$axios.$post('/api/updateQuestions',body)
@@ -143,15 +143,17 @@ export default {
     
     },
 
-    deleteQuestion(questionDeleted) {
-      this.localSelected.questions = this.localSelected.questions.filter(
-        (q) => q.id !== questionDeleted
+    deleteQuestion(index) {
+
+      this.questionsSelected = this.questionsSelected.filter(
+        (q) => q.question !== this.questionsSelected[index].question
       )
+      this.confirmChangeQuestion()
     },
     updateLocalQuestion(questionP, index, answersP){
       this.questionsSelected[index].question = questionP
       this.questionsSelected[index].answers = answersP
-      this.confirmAddNewQuestion()
+      this.confirmChangeQuestion()
      
     },
     searchFilter() {

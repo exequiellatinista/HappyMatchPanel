@@ -135,17 +135,20 @@ app.post('/updateQuestions', (req, res) => {
   const body = req.body
   const token = getToken(req, res)
   const localId = body.localId
+ 
   console.log('localID: ',localId)
   console.log('token: ',token)
-  const post = {
-    headers:
-      { Authorization: token },
   
-    data: {
+    const data= {
       arrayQuestions: body.questions
     }
-  }
-  axios.put(`https://happymatch-backend.herokuapp.com/api/questions/update/${localId}`,post)
+
+  axios.put(`https://happymatch-backend.herokuapp.com/api/questions/update/${localId}`,data, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    }
+  })
     .then(
       response => {
         res.json(response.data)
