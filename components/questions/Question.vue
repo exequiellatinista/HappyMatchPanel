@@ -18,12 +18,14 @@
       v-model="questionTitle"
       class="questionName"
       placeholder="Describe la pregunta"
+      @blur="updateQuestion()"
     />
     <div class="answers">
-      <div v-for="answer in localAnswers" :key="answer.answer" class="answer">
+      <div v-for="(answer, index) in localAnswers" :key="answer.answer" class="answer">
         <Answer
-          :answerprop="{ answer, localAnswers }"
+          :answerprop="{ answer, localAnswers, index }"
           @deleteAnswer="deleteAnswer(answer)"
+          @update:answer="updateQuestion"
         />
       </div>
       <div class="footerQuestion">
@@ -54,11 +56,14 @@ export default {
     classContainer: 'questionContainer',
     showModal: false,
     localAnswers: [],
+    answersCompleted: [],
     classColor: '',
     questionTitle: '',
     activeColor: 'notActiveColor',
-    colorArray: ['#e1e7e9', '#dedde7', '#dde7de', '#d1d6df'],
+    // colorArray: ['#e1e7e9', '#dedde7', '#dde7de', '#d1d6df'],
+    colorArray: ['#dedde7','#dedde7','#dedde7','#dedde7']
   }),
+
 
   mounted() {
     this.localAnswers = this.info.question.answers
@@ -80,11 +85,22 @@ export default {
       this.classContainer = 'deletedQuestion'
     },
     addNewAnswer() {
-      this.localAnswers.push({ id: Date.now(), answer: '' })
+      this.localAnswers.push('')
     },
     deleteAnswer(answer) {
       this.localAnswers = this.localAnswers.filter((a) => a.id !== answer.id)
     },
+    updateQuestion(answerL, index){
+      answerL &&  (this.localAnswers[index] = answerL)
+    
+      this.answersCompleted = this.localAnswers.filter((a) => a !== '')
+      console.log(this.localAnswers[1])
+
+      this.questionTitle !== '' &&
+        this.localAnswers[0] !== '' & this.localAnswers[1] !== '' &&
+      
+        this.$emit('update:question', this.questionTitle, this.info.index, this.answersCompleted)
+    }
   },
 }
 </script>

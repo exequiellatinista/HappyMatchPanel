@@ -28,17 +28,14 @@ app.get('/', (req, res) => {
   res.json(getToken(req, res))
 })
 app.post('/', (req, res) => {
-
-  console.log(req.body)
   const post = {
     "username": req.body.username,
-    "password":req.body.password
+    "password": req.body.password
   }
 
   axios.post('https://happymatch-backend.herokuapp.com/api/clients/loginClient', post)
     .then(response => {
       const { token, id, username, locals } = response.data.data
-      console.log(response)
       const cookies = new Cookies(req, res)
       if (token) {
 
@@ -47,7 +44,7 @@ app.post('/', (req, res) => {
           httpOnly: true
         })
 
-        cookies.set('user', JSON.stringify({id,username,locals}), {
+        cookies.set('user', JSON.stringify({ id, username, locals }), {
           maxAge: 3600000 * 12,
           httpOnly: true
         })
@@ -67,13 +64,14 @@ app.post('/', (req, res) => {
     })
 })
 app.get('/getGroupTables/:localId', (req, res) => {
-  const {localId} = req.params
+  const { localId } = req.params
   const token = getToken(req, res)
   const get = { headers: { Authorization: token } }
-   axios.get(`https://happymatch-backend.herokuapp.com/api/groupTables/getAllGroupTablesByLocalId/${localId}`, get)
+  axios.get(`https://happymatch-backend.herokuapp.com/api/groupTables/getAllGroupTablesByLocalId/${localId}`, get)
     .then(
       response => {
-        res.json( response.data )}
+        res.json(response.data)
+      }
     )
     .catch(e => {
       res.statusCode = 403
@@ -83,25 +81,82 @@ app.get('/getGroupTables/:localId', (req, res) => {
     })
 })
 
-app.get('/getUser', (req,res) => {
+app.get('/getUser', (req, res) => {
   const user = getUser(req, res)
   res.json(user)
 })
 
 app.get('/getQuestions/:localId', (req, res) => {
-  const {localId} = req.params
+  const { localId } = req.params
   const token = getToken(req, res)
   const get = { headers: { Authorization: token } }
   axios.get(`https://happymatch-backend.herokuapp.com/api/questions/getQuestionsByLocalId/${localId}`, get)
-  .then(
-    response => {
-      res.json( response.data )}
-  )
-  .catch(e => {
-    res.statusCode = 403
-    res.json({
-      error: e.message
+    .then(
+      response => {
+        res.json(response.data)
+      }
+    )
+    .catch(e => {
+      res.statusCode = 403
+      res.json({
+        error: e.message
+      })
     })
-  })
+})
+
+app.post('/createQuestions', (req, res) => {
+  const body = req.body
+  const token = getToken(req, res)
+  const headers = {
+    headers:
+      { Authorization: token }
+  }
+  const data = {
+    data: {
+      localId: body.localId,
+      arrayQuestions: body.questions
+    }
+  }
+  axios.post('https://happymatch-backend.herokuapp.com/api/questions/create', headers, data)
+    .then(
+      response => {
+        res.json(response.data)
+      }
+    )
+    .catch(e => {
+      res.statusCode = 403
+      res.json({
+        error: e.message
+      })
+    })
+})
+
+app.post('/updateQuestions', (req, res) => {
+  const body = req.body
+  const token = getToken(req, res)
+  const localId = body.localId
+  console.log('localID: ',localId)
+  console.log('token: ',token)
+  const post = {
+    headers:
+      { Authorization: token },
+  
+    data: {
+      arrayQuestions: body.questions
+    }
+  }
+  axios.put(`https://happymatch-backend.herokuapp.com/api/questions/update/${localId}`,post)
+    .then(
+      response => {
+        res.json(response.data)
+      }
+    )
+    .catch(e => {
+      res.statusCode = 403
+      console.log('error servidor', e)
+      res.json({
+        error: e.message
+      })
+    })
 })
 

@@ -12,8 +12,8 @@
     <div class='questions'>
       <p class="titleBoxs">Preguntas y respuestas</p>
       <div class="questionsSelected">
-        <div v-for="(question, index) in localSelected.questions" :key="question.question" class="question">
-          <Question :info='{question, index}' @clickDeleteQuestion='deleteQuestion(question.id)'/>
+        <div v-for="(question, index) in questionsSelected" :key="question.question" class="question">
+          <Question :info='{question, index}' @clickDeleteQuestion='deleteQuestion(question.id)' @update:question='updateLocalQuestion'/>
         </div>
              <div class="newQuestion">  
         <AddButton type='normal' @click='searchEmptyQuestion()'/>
@@ -55,6 +55,7 @@ export default {
   data: () => ({
     dataApi: {},
     localSelected: [],
+    questionsSelected: [],
     searchValue: '',
     emptyQuestions: [],
     clientId: '1234',
@@ -117,19 +118,41 @@ export default {
   methods: {
     setLocalSelected(local) {
       this.localSelected = this.locals.find((l) => l.id === local.id)
+      this.questionsSelected = this.localSelected.questions
     },
     addNewQuestion() {
-      console.log(this.localSelected.questions)
-      this.localSelected.questions.push({
-          answers: [{ answer: '' }, { answer: '' }],
+    
+      this.questionsSelected.push({
+          answers: [ '','' ],
         question: '',
       
       })
+        console.log(this.localSelected.questions)
     },
+
+    confirmAddNewQuestion(){
+      const localId =  this.localSelected.id
+      const questions = this.localSelected.questions
+      const body = {localId, questions}
+     
+      this.$axios.$post('/api/updateQuestions',body)
+      .then( res => console.log(res))
+     .catch((e) => {
+          console.log(e)
+        })
+    
+    },
+
     deleteQuestion(questionDeleted) {
       this.localSelected.questions = this.localSelected.questions.filter(
         (q) => q.id !== questionDeleted
       )
+    },
+    updateLocalQuestion(questionP, index, answersP){
+      this.questionsSelected[index].question = questionP
+      this.questionsSelected[index].answers = answersP
+      this.confirmAddNewQuestion()
+     
     },
     searchFilter() {
       this.localSelected.tables = this.localSelected.tables.filter((t) =>
@@ -174,12 +197,11 @@ export default {
     },
 
     searchEmptyQuestion() {
-      this.emptyQuestions = this.localSelected.questions.filter(
+      this.emptyQuestions = this.questionsSelected.filter(
         (q) => q.question === ''
       )
       this.emptyQuestions.length === 0
-        ? this.addNewQuestion()
-        : this.addNewQuestion()
+        && this.addNewQuestion()
     },
   },
 }
