@@ -98,7 +98,6 @@ export default {
       answerL &&  (this.localAnswers[index] = answerL)
     
       this.answersCompleted = this.localAnswers.filter((a) => a !== '')
-      console.log(this.localAnswers[1])
 
       this.questionTitle !== '' &&
         this.localAnswers[0] !== '' & this.localAnswers[1] !== '' &&

@@ -3,7 +3,7 @@
     <div :class="'blockPanel' + ' ' + showModal">
       <form>
         <label>Razon de bloqueo:</label>
-        <input />
+        <input v-model="blockReason"/>
         <div class="buttons">
           <button class="confirmButton" @click.prevent="changeShowModal(); reportClient()">
             <img src="@/assets/icons/confirm.svg" />
@@ -49,6 +49,7 @@ export default {
     reportClass: 'clientContainer',
     showModal: false,
     reports: 0,
+    blockReason: ''
   }),
   //  {
   //       id: '1',
@@ -69,9 +70,12 @@ export default {
   methods: {
     changeShowModal() {
       this.showModal= !this.showModal
+      console.log('id table ', this.info.id)
     },
     reportClient () {
       this.reports = 101
+      this.blockReason !== ''&&
+      this.$emit('delete:client', this.info.id, this.blockReason)
     }
   }
 }
