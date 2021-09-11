@@ -113,6 +113,7 @@ export default {
     console.log('hora fetch', Date.now())
     await this.setLocalSelected(this.locals[0])
     console.log(this.locals[0])
+     console.log('lista ban: ', await this.getGroupsBan())
   },
 
   methods: {
@@ -121,40 +122,36 @@ export default {
       this.questionsSelected = this.localSelected.questions
     },
     addNewQuestion() {
-    
       this.questionsSelected.push({
-          answers: [ '','' ],
+        answers: ['', ''],
         question: '',
-      
       })
-        console.log(this.localSelected.questions)
+      console.log(this.localSelected.questions)
     },
 
-    confirmChangeQuestion(){
-      const localId =  this.localSelected.id
+    confirmChangeQuestion() {
+      const localId = this.localSelected.id
       const questions = this.questionsSelected
-      const body = {localId, questions}
-     
-      this.$axios.$post('/api/updateQuestions',body)
-      .then( res => console.log(res))
-     .catch((e) => {
+      const body = { localId, questions }
+
+      this.$axios
+        .$post('/api/updateQuestions', body)
+        .then((res) => console.log(res))
+        .catch((e) => {
           console.log(e)
         })
-    
     },
 
     deleteQuestion(index) {
-
       this.questionsSelected = this.questionsSelected.filter(
         (q) => q.question !== this.questionsSelected[index].question
       )
       this.confirmChangeQuestion()
     },
-    updateLocalQuestion(questionP, index, answersP){
+    updateLocalQuestion(questionP, index, answersP) {
       this.questionsSelected[index].question = questionP
       this.questionsSelected[index].answers = answersP
       this.confirmChangeQuestion()
-     
     },
     searchFilter() {
       this.localSelected.tables = this.localSelected.tables.filter((t) =>
@@ -202,23 +199,32 @@ export default {
       this.emptyQuestions = this.questionsSelected.filter(
         (q) => q.question === ''
       )
-      this.emptyQuestions.length === 0
-        && this.addNewQuestion()
+      this.emptyQuestions.length === 0 && this.addNewQuestion()
     },
-    banClient(idGroup, reason){
-      this.$axios.$post(`/api/banGroupTable/${idGroup}`, {reason})
-      .then(res => console.log('Mesa baneada ', res))
-      .catch((e) => {
-        console.log(e)
-      })
+    banClient(idGroup, reason) {
+      this.$axios
+        .$post(`/api/banGroupTable/${idGroup}`, { reason })
+        .then((res) => console.log('Mesa baneada ', res))
+        .catch((e) => {
+          console.log(e)
+        })
     },
-    unBanClient(idGroup){
-      this.$axios.$post(`/api/unBanGroupTable/${idGroup}`)
-        .then(res => console.log('Mesa desbaneada ', res))
-      .catch((e) => {
-        console.log(e)
-      })
-    }
+    unBanClient(idGroup) {
+      this.$axios
+        .$post(`/api/unBanGroupTable/${idGroup}`)
+        .then((res) => console.log('Mesa desbaneada ', res))
+        .catch((e) => {
+          console.log(e)
+        })
+    },
+    getGroupsBan() {
+      return this.$axios
+        .$get('/api/getGroupsBan')
+        .then((res) => res)
+        .catch((e) => {
+          console.log(e)
+        })
+    },
   },
 }
 </script>
