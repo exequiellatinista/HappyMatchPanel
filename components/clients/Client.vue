@@ -75,7 +75,7 @@ export default {
     reportClient () {
       this.reports = 101
       this.blockReason !== ''&&
-      this.$emit('delete:client', this.info.id, this.blockReason)
+      this.$emit('ban:client', this.info.id, this.blockReason)
     }
   }
 }

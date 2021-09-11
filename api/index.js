@@ -135,15 +135,15 @@ app.post('/updateQuestions', (req, res) => {
   const body = req.body
   const token = getToken(req, res)
   const localId = body.localId
- 
-  console.log('localID: ',localId)
-  console.log('token: ',token)
-  
-    const data= {
-      arrayQuestions: body.questions
-    }
 
-  axios.put(`https://happymatch-backend.herokuapp.com/api/questions/update/${localId}`,data, {
+  console.log('localID: ', localId)
+  console.log('token: ', token)
+
+  const data = {
+    arrayQuestions: body.questions
+  }
+
+  axios.put(`https://happymatch-backend.herokuapp.com/api/questions/update/${localId}`, data, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `${token}`
@@ -163,3 +163,48 @@ app.post('/updateQuestions', (req, res) => {
     })
 })
 
+app.post('/banGroupTable/:idGroup', (req, res) => {
+  const { idGroup } = req.params
+  const body = req.body
+  const token = getToken(req, res)
+  const data = {
+    reason: body.reason
+  }
+  axios.post(`https://happymatch-backend.herokuapp.com/api/groupBans/${idGroup}`, data, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    }
+  }).then(response => {
+    res.json(response.data)
+  })
+    .catch(e => {
+      res.statusCode = 403
+      console.log('error servidor', e)
+      res.json({
+        error: e.message
+      })
+    })
+})
+
+app.delete('/unBanGroupTable/:idGroup', (req, res) => {
+  const { idGroup } = req.params
+
+  const token = getToken(req, res)
+
+  axios.post(`https://happymatch-backend.herokuapp.com/api/groupBans/unban/${idGroup}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    }
+  }).then(response => {
+    res.json(response.data)
+  })
+    .catch(e => {
+      res.statusCode = 403
+      console.log('error servidor', e)
+      res.json({
+        error: e.message
+      })
+    })
+})

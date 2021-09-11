@@ -32,7 +32,7 @@
         </div>
       </div>
       <div v-for="table in localSelected.tables" :key="localSelected.id + table.id" class="user">
-        <Client :info="table"/>
+        <Client :info="table" @ban:client="banClient"/>
       </div>
     </div>
     </div>
@@ -205,6 +205,20 @@ export default {
       this.emptyQuestions.length === 0
         && this.addNewQuestion()
     },
+    banClient(idGroup, reason){
+      this.$axios.$post(`/api/banGroupTable/${idGroup}`, {reason})
+      .then(res => console.log('Mesa baneada ', res))
+      .catch((e) => {
+        console.log(e)
+      })
+    },
+    unBanClient(idGroup){
+      this.$axios.$post(`/api/unBanGroupTable/${idGroup}`)
+        .then(res => console.log('Mesa desbaneada ', res))
+      .catch((e) => {
+        console.log(e)
+      })
+    }
   },
 }
 </script>
