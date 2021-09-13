@@ -1,7 +1,7 @@
 <template>
   <header>
     <nuxt-link to="/" class="logoAndTitle">
-      <img src="@/assets/images/logoTransparent.png" class="icons" />
+    <div class="dashboard">Dashboard</div>
       <h1></h1>
     </nuxt-link>
     <div class="profile">
@@ -22,14 +22,15 @@ header {
   justify-content: space-between;
   align-items: center;
   border-bottom: solid 1px;
-  background: #243746;
+  border-color: var(--border-color);
+  background: white;
   box-sizing: border-box;
   grid-auto-flow: column;
   padding: 0 2rem;
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   z-index: 99;
   top:0;
-  user-select: none
+  user-select: none;
+    padding-left: 10rem;
 }
 .logoAndTitle {
   display: grid;
@@ -38,11 +39,16 @@ header {
   grid-auto-flow: column;
   text-decoration: none;
 }
-.icons {
+.dashboard {
   height: 4rem;
   width: 10rem;
-  fill: pink;
-  user-select: none
+  text-align: center;
+  user-select: none;
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color:black;
 }
 
 h1 {
