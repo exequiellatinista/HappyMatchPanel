@@ -29,7 +29,7 @@ export default {
 
 <style>
 .containerDefault {
-  margin-top: 5rem;
+  padding-top: 5rem;
   padding-left: 10rem;
 }
 </style>

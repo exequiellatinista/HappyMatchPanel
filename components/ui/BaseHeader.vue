@@ -65,7 +65,7 @@ h1 {
   height: 2.5rem;
   width: 2.5rem;
   box-sizing: border-box;
-  background: white;
+  background: gray;
   border-radius: 50%;
   overflow: hidden;
 }

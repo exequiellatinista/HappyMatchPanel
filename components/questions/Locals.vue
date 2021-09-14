@@ -46,7 +46,7 @@ export default {
   width: calc(100% + 0.2rem);
   height: 100%;
   background: transparent;
-  border-top: 2px solid red;
+  border-top: 2px solid #2c3e4e;
   border-bottom: 2px solid white;
   border-radius: 0.3rem 0.3rem 0 0;
   z-index: 4;

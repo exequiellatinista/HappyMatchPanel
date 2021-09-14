@@ -1,14 +1,24 @@
 <template lang="">
   <p v-if="$fetchState.pending">Fetching locals...</p>
   <p v-else-if="$fetchState.error">An error occurred :(</p>
-  <div v-else class="indexQuestionContainer" @>
-    <div class='owner'>Administre las preguntas y respuestas que se veran en sus locales<br> Las preguntas tildadas como Active, son las que se estan mostrando en el dia de hoy.</div>
+  <div v-else class="indexQuestionContainer">
+    <div class='owner'>Bienvenido! administre las preguntas y respuestas que se veran en sus locales<br> En la columna derecha visualice las mesas activas en su local.</div>
     <div class='locals'>
       <div v-for="local in locals" :key="local.id" class='local'>
         <Locals :localprop='{local, localSelected}' @click="setLocalSelected(local)"/>
       </div>
     </div>
     <div class="localContainer">
+      <div class="stats">
+        <div class="cardStats">
+          <div class="statsIcon">P</div>
+          <div class="textIcon"><p class="statNumber">{{localSelected.questions.length}}</p><p>Preguntas disponibles</p></div>
+        </div>
+         <div class="cardStats">
+          <div class="statsIcon">M</div>
+          <div class="textIcon"><p class="statNumber">{{localSelected.tables.length}}</p><p>Mesas conectadas</p></div>
+        </div>
+      </div>
     <div class='questions'>
       <p class="titleBoxs">Preguntas y respuestas</p>
       <div class="questionsSelected">
@@ -113,7 +123,7 @@ export default {
     console.log('hora fetch', Date.now())
     await this.setLocalSelected(this.locals[0])
     console.log(this.locals[0])
-     console.log('lista ban: ', await this.getGroupsBan())
+    console.log('lista ban: ', await this.getGroupsBan())
   },
 
   methods: {
@@ -236,22 +246,29 @@ export default {
 .locals {
   display: grid;
   grid-auto-flow: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   gap: 0 0.5rem;
   border-bottom: solid 1px var(--border-color);
   user-select: none;
   margin-bottom: 3rem;
+  padding: 0 0 0 1rem;
 }
 .localContainer {
   width: 100%;
-  display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: start;
   gap: 0 1rem;
   box-sizing: border-box;
   padding: 1rem 1rem 0 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    'stats stats'
+    'questions users'
+    'questions users';
 }
+
 .questions {
   display: grid;
   align-items: start;
@@ -260,9 +277,12 @@ export default {
   box-sizing: border-box;
   border: solid 1px var(--border-color);
   position: relative;
+    background: white;
+  grid-area: questions;
 }
 .owner {
   font-size: 1rem;
+   padding: 1rem 1rem 0 1rem;
 }
 .newQuestion {
   position: relative;
@@ -307,6 +327,8 @@ export default {
   gap: 1rem 0;
   padding-top: 8rem;
   position: relative;
+   grid-area: users;
+   background: white;
 }
 .filterContainer {
   position: absolute;
@@ -366,5 +388,63 @@ export default {
   font-size: 14px;
   font-weight: 500;
   color: #5f6368;
+}
+
+.stats {
+ grid-area: stats; 
+ width: 100%;
+ height: 4rem;
+ display: grid;
+ grid-auto-flow: column;
+margin-bottom: 4rem;
+ box-sizing: border-box;
+ gap: 0 1rem;
+ grid-template-columns: 1fr 1fr;
+}
+
+.cardStats {
+ background: white;
+  border: 0.1rem solid var(--border-color);
+  box-sizing: border-box;
+   display: grid;
+   align-items: center;
+   justify-content: start;
+   grid-template-columns: 1fr 5fr;
+    padding: 0 1rem;
+}
+
+.statsIcon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+     display: grid;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   color:white;
+   font-size: 1.5rem;
+}
+
+.textIcon {
+display:grid;
+align-items: center;
+justify-content: start;
+grid-auto-flow: column;
+text-align: center;
+gap: 0 1rem;
+color: gray;
+}
+
+
+.cardStats:first-child  .statsIcon{
+  background: #a889e0;
+}
+.cardStats:last-child .statsIcon{
+   background: #07bca5;
+}
+
+.statNumber {
+  font-size: 1.5rem;
+  color:black;
 }
 </style>
