@@ -20,6 +20,18 @@ const getUser = (req, res) => {
   return user
 }
 
+const deleteToken = (req,res) => {
+  const cookies = new Cookies(req, res)
+  cookies.set('token', null, {
+    maxAge: 1 * 1,
+    httpOnly: true
+  })
+  cookies.set('user', null, {
+    maxAge: 1 * 1,
+    httpOnly: true
+  })
+}
+
 
 app.get('/', (req, res) => {
 
@@ -233,4 +245,14 @@ app.get('/getGroupsBan', (req, res) => {
         error: e.message
       })
     })
+})
+
+app.delete('/clearSesion', (req,res)=> {
+  try {
+  deleteToken(req,res)
+  res.end('Token deleted')
+  }
+  catch (error) {
+    res.end(error)
+  }
 })

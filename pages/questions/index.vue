@@ -111,6 +111,7 @@ export default {
         .$get(`/api/getGroupTables/${this.locals[0].id}`)
         .then((res) => {
           this.locals[0].tables = res.groupTables
+          this.localSelected.tables = res.groupTables
         })
         .catch((e) => console.log(e)))
     this.locals.length > 0 &&
@@ -251,7 +252,7 @@ export default {
   gap: 0 0.5rem;
   border-bottom: solid 1px var(--border-color);
   user-select: none;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   padding: 0 0 0 1rem;
 }
 .localContainer {
@@ -294,7 +295,7 @@ export default {
   border-radius: 0.3rem;
   background: transparent;
   max-width: 30rem;
-  min-width: 20rem;
+  min-width: 10rem;
   min-height: 12rem;
   overflow: hidden;
   border: dashed rgba(0, 0, 0, 0.1) 2px;
@@ -310,9 +311,9 @@ export default {
 .questionsSelected {
   padding: 2rem 1rem;
   display: grid;
-  width: calc(100% - 2rem);
+  width: 100%;
   grid-gap: 1.3rem;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   box-sizing: border-box;
 }
 
@@ -330,6 +331,10 @@ export default {
    grid-area: users;
    background: white;
 }
+.user {
+  width: 100%
+}
+
 .filterContainer {
   position: absolute;
   top: 0;

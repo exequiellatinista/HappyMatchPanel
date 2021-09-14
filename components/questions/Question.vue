@@ -122,7 +122,7 @@ export default {
   border-radius: 0.3rem;
   background: #e1e7e9;
   max-width: 30rem;
-  min-width: 20rem;
+  min-width: 10rem;
   min-height: 15rem;
   overflow: hidden;
   box-sizing: border-box;

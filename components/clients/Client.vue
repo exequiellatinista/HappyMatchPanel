@@ -17,18 +17,18 @@
     <div class="reportButton" @click="changeShowModal()">
       <img src="@/assets/icons/block.svg" />
     </div>
-    <img src="@/assets/images/perfiles.jpg" />
+    <div class="imgProfile"><img src="@/assets/images/no-image.png" /></div>
     <div class="info">
       <div id="infoTable" class="boxInfo">
         <p>{{ info.name }}</p>
       </div>
       <div class="boxInfo">
-        <p class="titleCards">Usuario:</p>
-        <p>{{ info.userMainId }}</p>
+        <p class="titleCards">Usuario: </p>
+        <p class="userMain">{{ info.userMainId }}</p>
       </div>
       <div id="reports" class="boxInfo">
-        <p class="titleCards">Reportes:</p>
-        <p>{{ info.reports }}</p>
+        <p class="titleCards">Reportes: </p>
+        <p>{{ info.reports? info.reports : '0' }}</p>
       </div>
     </div>
   </div>
@@ -92,10 +92,9 @@ export default {
   align-content: center;
   justify-content: flex-start;
   flex-direction: row;
-  padding: 1rem 5rem 1rem 1rem;
   position: relative;
-  min-width: 25rem;
   overflow: hidden;
+  padding: 0.5rem 0 0 0;
 }
 
 .clientReported {
@@ -110,7 +109,6 @@ export default {
   flex-direction: row;
   padding: 1rem 5rem 1rem 1rem;
   position: relative;
-  min-width: 25rem;
   overflow: hidden;
 }
 
@@ -118,11 +116,21 @@ export default {
   color: red;
 }
 
-img {
-  height: 90%;
+
+.imgProfile {
+  display:grid;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.imgProfile img {
+  height: 6rem;
+  width: 6rem
 }
 .info {
   margin: 0 0 0 1rem;
+  width: calc(100% - 12rem)
 }
 .boxInfo {
   display: flex;
@@ -210,5 +218,11 @@ img {
   border-radius: 0.5rem;
   border: none;
   cursor: pointer;
+}
+
+.userMain {
+  word-wrap: break-word;
+  height: auto;
+  width: calc(100% - 4rem)
 }
 </style>
