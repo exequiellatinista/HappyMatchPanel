@@ -56,12 +56,6 @@ import AddButton from '@/components/questions/tools/AddButton.vue'
 export default {
   name: 'QuestionsIndex',
   components: { Locals, Question, AddButton, Client },
-  // props: {
-  //   owner: {
-  //     type: Object,
-  //     required: true,
-  //   }
-  // },
   data: () => ({
     dataApi: {},
     localSelected: [],
