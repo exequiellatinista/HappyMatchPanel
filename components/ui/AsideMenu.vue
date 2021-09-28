@@ -18,7 +18,6 @@ methods: {
     .catch(e => console.log(e))
   }
 }
-
 }
 </script>
 
@@ -72,7 +71,6 @@ display: grid;
   grid-auto-flow: column;
   cursor: pointer;
   box-sizing: border-box;
-  
 }
 
 </style>

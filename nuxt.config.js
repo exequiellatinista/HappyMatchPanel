@@ -95,12 +95,6 @@ export default {
     emulatorPort: 9099,
     emulatorHost: 'http://localhost',
 
-    // ssr: {
-    //   ignorePaths: [
-    //     '/questions', // path is ignored if url.pathname.startsWith('/admin')
-    //     /^api/ // path is ignored if url.pathname without the leading slash (/) matches the RegExp
-    //   ]
-    // }
   },
   serverMiddleware: ['~/api/index.js'],
   // Build Configuration: https://go.nuxtjs.dev/config-build

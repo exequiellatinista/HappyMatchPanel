@@ -9,19 +9,17 @@
         </section>
       </v-container>
     </v-main>
-    <!-- <BaseFooter /> -->
   </div>
 </template>
 
 <script>
 import BaseHeader from '@/components/ui/BaseHeader.vue'
 import AsideMenu from '@/components/ui/AsideMenu.vue'
-// import BaseFooter from '@/components/ui/BaseFooter.vue'
+
 export default {
   components: {
     AsideMenu,
     BaseHeader,
-    // BaseFooter,
   },
   middleware: 'auth',
 }

@@ -28,8 +28,6 @@
             Acceder
           </button></div>
         <div class="socialButtons">
-          <SocialLoginButton type="Google" @click="loginWithGoogle" />
-          <SocialLoginButton type="Facebook" />
           <p class="register" @click="changeRegisterMode">Registrarse</p>
         </div>
       </form>
@@ -39,14 +37,12 @@
 </template>
 <script>
 import ColorSwitch from '@/components/ui/ColorSwitch.vue'
-import SocialLoginButton from '@/components/auth/SocialLoginButton.vue'
 import { mapMutations } from 'vuex'
 
 export default {
   name: 'Login',
   components: {
     ColorSwitch,
-    SocialLoginButton,
   },
   layout: 'auth',
   data: () => ({

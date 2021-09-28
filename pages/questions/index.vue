@@ -20,7 +20,7 @@
         </div>
       </div>
     <div class='questions'>
-      <p class="titleBoxs">Preguntas y respuestas</p>
+      <p class="titleBoxs">Preguntas</p>
       <div class="questionsSelected">
         <div v-for="(question, index) in questionsSelected" :key="question.question" class="question">
           <Question :info='{question, index}' @delete:question='deleteQuestion' @update:question='updateLocalQuestion'/>
@@ -70,28 +70,6 @@ export default {
     emptyQuestions: [],
     clientId: '1234',
     locals: [],
-    // locals: [
-    //   {
-    //     id: '',
-    //     name: '',
-    //     tables: [
-    //       {
-    //         tableid: '',
-    //         name: '',
-    //         userMainId: '',
-    //         userCount: '',
-    //         picture: '',
-    //         arrayResp: [],
-    //       },
-    //     ],
-    //     questions: [
-    //       {
-    //         answers: ['azúl', 'verde', 'rojo'],
-    //         question: 'Color favorito',
-    //       },
-    //     ],
-    //   },
-    // ],
   }),
 
   async fetch() {

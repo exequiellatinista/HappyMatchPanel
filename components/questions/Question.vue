@@ -61,7 +61,6 @@ export default {
     classColor: '',
     questionTitle: '',
     activeColor: 'notActiveColor',
-    // colorArray: ['#e1e7e9', '#dedde7', '#dde7de', '#d1d6df'],
     colorArray: ['#f0f0f0','#f0f0f0','#f0f0f0','#f0f0f0']
   }),
 
