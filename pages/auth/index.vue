@@ -7,6 +7,7 @@
         <p>Inicie sesión con su usuario y contraseña</p>
         <input
           v-model="userName"
+           class="loginInput"
           type="text"
           data-value="false"
           name="email"
@@ -16,6 +17,7 @@
         />
         <input
           v-model="userPassword"
+          class="loginInput"
           type="password"
           data-value="false"
           name="password"
@@ -23,15 +25,31 @@
           required=""
           placeholder="Password"
         />
-        <div class="containerButton"
-          ><button class="buttonSubmit" type="submit" @click.prevent="loginWithUserName()">
+        <div class="containerButton">
+          <button
+            class="buttonSubmit"
+            type="submit"
+            @click.prevent="loginWithUserName()"
+          >
             Acceder
-          </button></div>
+          </button>
+        </div>
         <div class="socialButtons">
           <p class="register" @click="changeRegisterMode">Registrarse</p>
         </div>
       </form>
-      <span> Powered by <a>Pollux</a> </span>
+      <form v-else class="registerForm">
+        <label>Nombre de usuario:</label>
+        <input class="registerInput"/>
+        <label>Correo electronico:</label>
+        <input class="registerInput"/>
+        <label>Password:</label>
+        <input class="registerInput"/>
+        <label>Confirme password:</label>
+        <input class="registerInput"/>
+        <div class="containerButton"><button class="buttonRegister">Registrarse</button></div>
+      </form>
+      <span class="poweredSpan"> Powered by <a>Pollux</a> </span>
     </div>
   </div>
 </template>
@@ -71,22 +89,16 @@ export default {
     },
 
     async loginWithUserName() {
-       const post = {
-          
-            "username": this.userName,
-            "password": this.userPassword,
-        
-        }
+      const post = {
+        username: this.userName,
+        password: this.userPassword,
+      }
       try {
-       
-        await this.$axios
-          .$post(`/api`, post)
-          .then((result) => {
-            const {id, locals } = result.data
-             this.setClient({id, locals})
-            this.$router.push('questions')
-          })
-          
+        await this.$axios.$post(`/api`, post).then((result) => {
+          const { id, locals } = result.data
+          this.setClient({ id, locals })
+          this.$router.push('questions')
+        })
       } catch (error) {
         console.error('Login error', error)
       }
@@ -114,12 +126,28 @@ export default {
   align-items: center;
   flex-direction: column;
   width: 28.125rem;
-  height: 31.25rem;
+  min-height: 31.25rem;
   border: 1px solid var(--border-color);
   border-radius: 0.625rem;
-  padding: 1.25rem 3.75rem;
+  padding: 2.5rem 3.75rem;
   overflow: hidden;
   box-sizing: border-box;
+  transition:all 0.5s 0s ease;
+}
+
+.registerForm {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.registerForm input {
+  width:100%
+}
+.registerForm label {
+  width: 100%;
 }
 
 .loginForm {
@@ -134,7 +162,7 @@ export default {
   justify-content: flex-end;
 }
 
-.buttonSubmit {
+button {
   font-weight: 500;
   font-size: 0.875rem;
   background-color: black;
@@ -159,12 +187,20 @@ h1 {
   text-align: center;
 }
 
-input {
+.loginInput {
   width: 100%;
   padding: 1rem 0.875rem;
   border: 1px solid var(--border-color);
   border-radius: 0.3125rem;
-  margin: 1rem;
+  margin: 1rem 0;
+}
+
+.registerInput {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.3125rem;
+  margin: 0.5rem 0;
 }
 
 a {
@@ -173,10 +209,10 @@ a {
   text-decoration: none;
 }
 
-span {
+.poweredSpan {
   position: absolute;
   left: 0;
-  bottom: 1.25rem;
+  bottom: 2%;
   width: 100%;
   text-align: center;
   font-size: 0.875rem;
