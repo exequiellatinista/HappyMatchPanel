@@ -5,6 +5,7 @@
   :type="type"
   :autocomplete="autocomplete"
   :required="required"
+  @input="$emit('input', $event.target.value)"
   >
     
  
@@ -13,7 +14,7 @@
 export default {
   props: {
     id: { type: String, required: true },
-
+    modelo: {type: String, required: true},
     clase: { type: String, required: true },
     type: { type: String, required: true },
     autocomplete: { type: String, required: true },

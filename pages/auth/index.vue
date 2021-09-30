@@ -39,43 +39,47 @@
         <label for="username">Nombre de usuario:</label>
         <BaseRegisterInput
           id="username"
-          v-model="newUserName"
+          :modelo="newUserName"
           clase="registerInput"
           type="text"
           data-value="false"
           autocomplete="off"
           required="true"
-          @input="validateUser()"
+          @input="(value) => newUserName=value"
+         
         />
         <label for="email">Correo electronico:</label>
-        <input
+        <BaseRegisterInput
           id="email"
-          v-model="newEmail"
-          class="registerInput"
+          :modelo="newEmail"
+          clase="registerInput"
           type="email"
           data-value="false"
           autocomplete="on"
           required="true"
+          @input="(value) => newEmail=value"
         />
         <label for="password">Password:</label>
-        <input
+        <BaseRegisterInput
           id="password"
-          v-model="newPassword"
-          class="registerInput"
+          :modelo="newPassword"
+          clase="registerInput"
           type="password"
           data-value="false"
           autocomplete="off"
           required="true"
+          @input="(value) => newPassword=value"
         />
         <label for="confirmpassword">Confirme password:</label>
-        <input
+        <BaseRegisterInput
           id="confirmpassword"
-          v-model="newPasswordConfirm"
-          class="registerInput"
+          :modelo="newPasswordConfirm"
+          clase="registerInput"
           type="password"
           data-value="false"
           autocomplete="off"
           required="true"
+          @input="(value) => newPasswordConfirm=value"
         />
         <div class="containerButton">
           <button class="buttonRegister" @click.prevent="registerClient()">
@@ -143,11 +147,21 @@ export default {
         console.error('Login error', error)
       }
     },
-    registerClient() {
-      const re = /^[a-zA-Z0-9]*$/
-      const isUserValid = re.test(this.newUserName)
-      console.log(isUserValid)
+    async registerClient(data) {
+      try {
+      await this.$fire.auth.createUserWithEmailAndPassword(this.newEmail, this.newPassword)
+      this.updateNameUser()
+      } 
+      catch (error) {
+        console.error(error) // TODO: show toast
+      }
       loginServices.get().then((user) => console.log(user))
+    },
+    async updateNameUser(){
+      await this.$fire.auth.currentUser.updateProfile({
+        displayName: this.newUserName
+      }).then(this.isRegisterMode=false)
+      console.log(this.$fire.auth.currentUser)
     },
     validateUser(){
       const re = /^[a-zA-Z0-9]*$/
