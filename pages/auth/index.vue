@@ -1,18 +1,16 @@
 <template>
   <div class="containerLogin">
-    <ColorSwitch class="colorSwitch" />
     <div class="loginBox">
       <h1>HappyMatch</h1>
       <form v-if="!isRegisterMode" class="loginForm">
         <p>Inicie sesión con su usuario y contraseña</p>
         <input
           v-model="userName"
-           class="loginInput"
+          class="loginInput"
           type="text"
           data-value="false"
-          name="email"
           autocomplete="off"
-          required=""
+          required="true"
           placeholder="Usuario"
         />
         <input
@@ -20,9 +18,8 @@
           class="loginInput"
           type="password"
           data-value="false"
-          name="password"
           autocomplete="on"
-          required=""
+          required="true"
           placeholder="Password"
         />
         <div class="containerButton">
@@ -39,35 +36,78 @@
         </div>
       </form>
       <form v-else class="registerForm">
-        <label>Nombre de usuario:</label>
-        <input class="registerInput"/>
-        <label>Correo electronico:</label>
-        <input class="registerInput"/>
-        <label>Password:</label>
-        <input class="registerInput"/>
-        <label>Confirme password:</label>
-        <input class="registerInput"/>
-        <div class="containerButton"><button class="buttonRegister">Registrarse</button></div>
+        <label for="username">Nombre de usuario:</label>
+        <BaseRegisterInput
+          id="username"
+          v-model="newUserName"
+          clase="registerInput"
+          type="text"
+          data-value="false"
+          autocomplete="off"
+          required="true"
+          @input="validateUser()"
+        />
+        <label for="email">Correo electronico:</label>
+        <input
+          id="email"
+          v-model="newEmail"
+          class="registerInput"
+          type="email"
+          data-value="false"
+          autocomplete="on"
+          required="true"
+        />
+        <label for="password">Password:</label>
+        <input
+          id="password"
+          v-model="newPassword"
+          class="registerInput"
+          type="password"
+          data-value="false"
+          autocomplete="off"
+          required="true"
+        />
+        <label for="confirmpassword">Confirme password:</label>
+        <input
+          id="confirmpassword"
+          v-model="newPasswordConfirm"
+          class="registerInput"
+          type="password"
+          data-value="false"
+          autocomplete="off"
+          required="true"
+        />
+        <div class="containerButton">
+          <button class="buttonRegister" @click.prevent="registerClient()">
+            Registrarse
+          </button>
+        </div>
       </form>
       <span class="poweredSpan"> Powered by <a>Pollux</a> </span>
     </div>
   </div>
 </template>
 <script>
-import ColorSwitch from '@/components/ui/ColorSwitch.vue'
 import { mapMutations } from 'vuex'
+import loginServices from '@/services/loginServices.js'
+import BaseRegisterInput from '@/components/auth/BaseRegisterInput.vue'
 
 export default {
   name: 'Login',
-  components: {
-    ColorSwitch,
+    components: {
+    BaseRegisterInput
   },
   layout: 'auth',
   data: () => ({
     isRegisterMode: false,
     userPassword: '',
     userName: '',
+    newUserName: '',
+    newPassword: '',
+    newEmail: '',
+    newPasswordConfirm: '',
   }),
+
   methods: {
     ...mapMutations({
       setUser: 'authentication/setUser',
@@ -103,6 +143,18 @@ export default {
         console.error('Login error', error)
       }
     },
+    registerClient() {
+      const re = /^[a-zA-Z0-9]*$/
+      const isUserValid = re.test(this.newUserName)
+      console.log(isUserValid)
+      loginServices.get().then((user) => console.log(user))
+    },
+    validateUser(){
+      const re = /^[a-zA-Z0-9]*$/
+      const isUserValid = re.test(this.newUserName)
+      isUserValid&&console.log('cadena valida')
+
+    }
   },
 }
 </script>
@@ -132,7 +184,7 @@ export default {
   padding: 2.5rem 3.75rem;
   overflow: hidden;
   box-sizing: border-box;
-  transition:all 0.5s 0s ease;
+  transition: all 0.5s 0s ease;
 }
 
 .registerForm {
@@ -143,9 +195,6 @@ export default {
   align-items: center;
 }
 
-.registerForm input {
-  width:100%
-}
 .registerForm label {
   width: 100%;
 }
@@ -172,6 +221,7 @@ button {
   overflow: hidden;
   cursor: pointer;
   color: white;
+  margin: 0.5rem 0;
 }
 
 p {
@@ -196,11 +246,10 @@ h1 {
 }
 
 .registerInput {
-  width: 100%;
   padding: 0.5rem;
   border: 1px solid var(--border-color);
   border-radius: 0.3125rem;
-  margin: 0.5rem 0;
+  margin: 0.5rem 0 1.5rem 0;
 }
 
 a {
