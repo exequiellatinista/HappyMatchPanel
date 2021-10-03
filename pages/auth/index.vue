@@ -11,7 +11,7 @@
           data-value="false"
           autocomplete="off"
           required="true"
-          placeholder="Usuario"
+          placeholder="Correo electronico"
         />
         <input
           v-model="userPassword"
@@ -26,7 +26,8 @@
           <button
             class="buttonSubmit"
             type="submit"
-            @click.prevent="loginWithUserName()"
+           
+              @click.prevent="loginWithUserNameAndEmail()"
           >
             Acceder
           </button>
@@ -36,6 +37,7 @@
         </div>
       </form>
       <form v-else class="registerForm">
+         <div class="backButton" @click="isRegisterMode=false"><img src="@/assets/icons/backArrow.svg"></div>
         <label for="username">Nombre de usuario:</label>
         <BaseRegisterInput
           id="username"
@@ -117,6 +119,21 @@ export default {
       setUser: 'authentication/setUser',
       setClient: 'data/setClient',
     }),
+    loginWithUserNameAndEmail() {
+this.$fire.auth.signInWithEmailAndPassword( this.userName, this.userPassword)
+  .then((userCredential) => {
+    // Signed in
+    console.log(userCredential)
+    const user = userCredential.user.displayName;
+    console.log(user)
+    // ...
+    userCredential&&
+    this.loginWithUserName(user)
+  })
+  .catch((error) => {
+    console.log(error)
+  });
+    },
     async loginWithGoogle() {
       try {
         const provider = new this.$fireModule.auth.GoogleAuthProvider()
@@ -132,9 +149,9 @@ export default {
       this.isRegisterMode = !this.isRegisterMode
     },
 
-    async loginWithUserName() {
+    async loginWithUserName(userName) {
       const post = {
-        username: this.userName,
+        username: userName,
         password: this.userPassword,
       }
       try {
@@ -295,4 +312,15 @@ a {
   cursor: pointer;
   font-weight: bold;
 }
+
+.backButton {
+ position: absolute;
+ top: 1rem;
+ left: 1rem;
+ width: 1rem;
+ height: 1rem;
+ cursor: pointer;
+}
+
+
 </style>
