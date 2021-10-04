@@ -30,7 +30,7 @@ header {
   z-index: 99;
   top:0;
   user-select: none;
-    padding-left: 10rem;
+    padding-left: 16rem;
 }
 .logoAndTitle {
   display: grid;

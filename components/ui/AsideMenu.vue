@@ -3,13 +3,18 @@
     <div class="containerAside">
     <div class="header"><img ><p>HappyMatch</p></div>
     <div class="row titleRow"><img src="@/assets/icons/rainbow.svg"><p>Dashboard</p></div>
-     <div class="row titleRow" @click="clearSesion()"><nuxt-link to="/auth"><img src="@/assets/icons/closeSesion.svg"><p>Cerrar Sesion</p></nuxt-link></div>
+   
     </div>
+    <ItemAsideMenu title='Cuentas' :options="[{'title':'Dueños', 'url':'/users/owners'}, {'title':'Administradores', 'url':'/users/admins'}]"/>
+    <ItemAsideMenu title='Locales' :options="[{'title':'Bares', 'url':'/locals/'},{'title':'Mesas', 'url':'/tables'}]"/>
+      <div class="row titleRow" @click="clearSesion()"><nuxt-link to="/auth"><img src="@/assets/icons/closeSesion.svg"><p>Cerrar Sesion</p></nuxt-link></div>
   </aside>
 </template>
 
 <script>
+import ItemAsideMenu from './ItemAsideMenu.vue'
 export default {
+  components: { ItemAsideMenu },
 name: 'AsideMenu',
 methods: {
  async clearSesion() {
@@ -25,11 +30,12 @@ methods: {
 aside {
   top:0;
   position:fixed;
-  width: 10rem;
   height: 100%;
   background: #2c3e4e;
   z-index: 99;
   padding: 1rem 0;
+  border-width: 0 1px 0 0;
+  width: 15rem;
 }
 
 .containerAside {

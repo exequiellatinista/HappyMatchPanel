@@ -12,6 +12,7 @@
 </template>
 <script>
 export default {
+  name: 'BaseRegisterInput',
   props: {
     id: { type: String, required: true },
     modelo: {type: String, required: true},

@@ -28,6 +28,7 @@ export default {
 <style>
 .containerDefault {
   padding-top: 5rem;
-  padding-left: 10rem;
+  padding-left: 15rem;
+      background: var(--background-color);
 }
 </style>
