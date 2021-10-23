@@ -42,12 +42,12 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    // https://www.npmjs.com/package/@nuxtjs/svg
-    '@nuxtjs/svg',
     // https://firebase.nuxtjs.org/
     '@nuxtjs/firebase',
-       // Doc: https://http.nuxtjs.org
-       '@nuxt/http'
+    // Doc: https://http.nuxtjs.org
+    '@nuxt/http',
+    // https://www.npmjs.com/package/@nuxtjs/toast
+    '@nuxtjs/toast'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -60,6 +60,19 @@ export default {
       lang: 'en'
     }
   },
+
+  toast: {
+    position: 'top-right',
+    register: [ // Register custom toasts
+      {
+        name: 'my-error',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error'
+        }
+      }
+    ]
+},
 
 
   firebase: {
@@ -97,5 +110,9 @@ export default {
   serverMiddleware: ['~/api/index.js'],
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+    extend(config, ctx) {} 
+},
+server: {
+    host: "192.168.100.2" // TODO: 0.0.0.0 on prod   "192.168.1.71" "192.168.100.2"
+}
 }
